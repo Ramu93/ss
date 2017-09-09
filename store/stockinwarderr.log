@@ -1,0 +1,200 @@
+
+ Stock Inward error for Store material inward id : 1, item_id : 
+ Stock Inward error for Store material inward id : 1, item_id : 7
+ Stock Inward error for Store material inward id : 1, item_id : 7
+ Stock Inward error for Store material inward id : 3, item_id : 7 
+ INSERT INTO store_material_inward (mrn_type, engineer_id) VALUES ('internal',3)
+ Stock Inward error for Store material inward id : 6, item_id : 3 
+ INSERT INTO store_material_inward_detail (store_material_inward_id, item_master_id, accepted_quantity)
+                        VALUES (6, 3, )
+ Input array : Array
+(
+    [mrn_type] => internal
+    [engineer_id] => 6
+    [purchase_order_number] => 
+    [returned_qty] => Array
+        (
+            [0] => 
+            [1] => 1
+        )
+
+    [h_esid_5] => 5
+    [h_avail_qty_5] => 1
+    [h_item_master_id_5] => 8
+    [picked_list] => Array
+        (
+            [0] => 6
+        )
+
+    [h_esid_6] => 6
+    [h_avail_qty_6] => 1
+    [h_item_master_id_6] => 3
+    [action] => receive_material
+)
+
+ Stock Inward error for Store material inward id : 7, item_id : 3 
+ INSERT INTO store_material_inward_detail (store_material_inward_id, item_master_id, accepted_quantity)
+                        VALUES (7, 3, )
+ Input array : Array
+(
+    [mrn_type] => internal
+    [engineer_id] => 3
+    [purchase_order_number] => 
+    [returned_qty] => Array
+        (
+            [0] => 
+            [1] => 
+            [2] => 
+            [3] => 1
+        )
+
+    [h_esid_1] => 1
+    [h_avail_qty_1] => 1
+    [h_item_master_id_1] => 6
+    [h_esid_2] => 2
+    [h_avail_qty_2] => 1
+    [h_item_master_id_2] => 7
+    [h_esid_3] => 3
+    [h_avail_qty_3] => 1
+    [h_item_master_id_3] => 3
+    [picked_list] => Array
+        (
+            [0] => 4
+        )
+
+    [h_esid_4] => 4
+    [h_avail_qty_4] => 2
+    [h_item_master_id_4] => 8
+    [action] => receive_material
+)
+
+ Stock Inward error for Store material inward id : 8, item_id : 8 
+ INSERT INTO store_material_inward_detail (store_material_inward_id, item_master_id, accepted_quantity)
+                        VALUES (8, 8, )
+ Input array : Array
+(
+    [mrn_type] => internal
+    [engineer_id] => 3
+    [purchase_order_number] => 
+    [h_esid_1] => 1
+    [h_avail_qty_1] => 1
+    [h_item_master_id_1] => 6
+    [h_esid_2] => 2
+    [h_avail_qty_2] => 1
+    [h_item_master_id_2] => 7
+    [h_esid_3] => 3
+    [h_avail_qty_3] => 1
+    [h_item_master_id_3] => 3
+    [picked_list] => Array
+        (
+            [0] => 4
+        )
+
+    [h_esid_4] => 4
+    [h_avail_qty_4] => 2
+    [h_item_master_id_4] => 8
+    [action] => receive_material
+)
+
+ Stock Inward error for Store material inward id : 9, item_id : 8 
+ INSERT INTO store_material_inward_detail (store_material_inward_id, item_master_id, accepted_quantity)
+                        VALUES (9, 8, )
+ Input array : Array
+(
+    [mrn_type] => internal
+    [engineer_id] => 3
+    [purchase_order_number] => 
+    [returned_qty_1] => 
+    [h_esid_1] => 1
+    [h_avail_qty_1] => 1
+    [h_item_master_id_1] => 6
+    [returned_qty_2] => 
+    [h_esid_2] => 2
+    [h_avail_qty_2] => 1
+    [h_item_master_id_2] => 7
+    [returned_qty_3] => 1
+    [picked_list] => Array
+        (
+            [0] => 3
+        )
+
+    [h_esid_3] => 3
+    [h_avail_qty_3] => 1
+    [h_item_master_id_3] => 3
+    [returned_qty_4] => 
+    [h_esid_4] => 4
+    [h_avail_qty_4] => 2
+    [h_item_master_id_4] => 8
+    [action] => receive_material
+)
+
+ Input array : Array
+(
+    [mrn_type] => internal
+    [engineer_id] => 6
+    [purchase_order_number] => 
+    [returned_qty_5] => 
+    [h_esid_5] => 5
+    [h_avail_qty_5] => 1
+    [h_item_master_id_5] => 8
+    [returned_qty_6] => 2
+    [picked_list] => Array
+        (
+            [0] => 6
+        )
+
+    [h_esid_6] => 6
+    [h_avail_qty_6] => 1
+    [h_item_master_id_6] => 3
+    [action] => receive_material
+)
+
+ Input array : Array
+(
+    [mrn_type] => internal
+    [engineer_id] => 6
+    [purchase_order_number] => 
+    [returned_qty_5] => 
+    [h_esid_5] => 5
+    [h_avail_qty_5] => 1
+    [h_item_master_id_5] => 8
+    [returned_qty_6] => -2
+    [picked_list] => Array
+        (
+            [0] => 6
+        )
+
+    [h_esid_6] => 6
+    [h_avail_qty_6] => -1
+    [h_item_master_id_6] => 3
+    [action] => receive_material
+)
+
+ Input array : Array
+(
+    [mrn_type] => internal
+    [engineer_id] => 3
+    [purchase_order_number] => 
+    [returned_qty_1] => 
+    [h_esid_1] => 1
+    [h_avail_qty_1] => 1
+    [h_item_master_id_1] => 6
+    [returned_qty_2] => 
+    [h_esid_2] => 2
+    [h_avail_qty_2] => 2
+    [h_item_master_id_2] => 7
+    [returned_qty_3] => 
+    [h_esid_3] => 3
+    [h_avail_qty_3] => 2
+    [h_item_master_id_3] => 3
+    [returned_qty_4] => 1
+    [picked_list] => Array
+        (
+            [0] => 4
+        )
+
+    [h_esid_4] => 4
+    [h_avail_qty_4] => 2
+    [h_item_master_id_4] => 8
+    [action] => receive_material
+)

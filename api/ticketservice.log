@@ -1,0 +1,124 @@
+
+Array
+(
+    [action] => attend_ticket
+    [mode] => start
+)
+
+Array
+(
+    [action] => attend_ticket
+    [mode] => start
+)
+
+Array
+(
+    [action] => attend_ticket
+    [mode] => start
+)
+
+Array
+(
+    [action] => attend_ticket
+    [mode] => start
+)
+
+Array
+(
+    [action] => attend_ticket
+    [mode] => stop
+    [ticket_status] => complete
+    [solution] => tonerrefilled
+)
+
+Array
+(
+    [action] => attend_ticket
+    [mode] => start
+)
+
+Array
+(
+    [action] => attend_ticket
+    [mode] => stop
+    [ticket_status] => complete
+    [solution] => tonerrefilled
+)
+
+Array
+(
+    [action] => attend_ticket
+    [mode] => start
+)
+
+Array
+(
+    [action] => attend_ticket
+    [mode] => stop
+    [ticket_status] => complete
+    [solution] => tonerrefilled
+)
+
+Array
+(
+    [action] => attend_ticket
+    [mode] => start
+)
+
+Array
+(
+    [action] => attend_ticket
+    [mode] => stop
+    [ticket_status] => complete
+    [solution] => tonerrefilled
+)
+
+Array
+(
+    [action] => attend_ticket
+    [mode] => start
+)
+
+Array
+(
+    [action] => attend_ticket
+    [mode] => stop
+    [ticket_status] => complete
+    [solution] => tonerrefilled
+)
+
+Array
+(
+    [action] => attend_ticket
+    [mode] => start
+)
+
+Array
+(
+    [action] => attend_ticket
+    [mode] => stop
+    [ticket_status] => complete
+    [solution] => tonerrefilled
+)
+
+TicketStart
+Array
+(
+    [action] => attend_ticket_start
+    [ticket_id] => 123
+    [opening_reading] => 123
+    [latitude] => 20.333
+    [longitude] => 47.7333
+    [mode] => start
+)
+
+TicketStop
+Array
+(
+    [action] => attend_ticket_stop
+    [ticket_id] => 123
+    [opening_reading] => 123
+    [latitude] => 20.333
+    [longitude] => 47.7333
+    [mode] => stop
+)

@@ -1,0 +1,7 @@
+
+ Stock Inward error for Store material inward id : , item_id : 3 
+ INSERT INTO store_material_issue_detail (store_material_issue_id, engineer_id, item_master_id, issued_quantity)
+                    VALUES (, 3, 3, 1)
+ Stock Inward error for Store material inward id : , item_id : 8 
+ INSERT INTO store_material_issue_detail (store_material_issue_id, engineer_id, item_master_id, issued_quantity)
+                    VALUES (, 3, 8, 1)

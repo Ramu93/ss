@@ -1,0 +1,4 @@
+
+ Purchase Indent error for Purchase Indent id : 1, item_id : 10 
+ INSERT INTO purchase_indent_detail (purchase_indent_id, item_master_id, requested_quantity, status)
+                    VALUES (1, 10, , 'created')

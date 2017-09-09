@@ -1,0 +1,104 @@
+
+Array
+(
+    [action] => fetch_asset
+    [customer_id] => 1
+    [tag_id] => 0688404151
+    [fetch_type] => tag
+)
+
+Array
+(
+    [action] => fetch_asset
+    [customer_id] => 1
+    [tag_id] => 0688404151
+    [fetch_type] => tag
+)
+
+Array
+(
+    [action] => fetch_asset
+    [customer_id] => 1
+    [tag_id] => 0688404151
+    [fetch_type] => tag
+)
+
+Array
+(
+    [action] => fetch_asset
+    [customer_id] => 1
+    [tag_id] => 068840415
+    [fetch_type] => tag
+)
+
+Array
+(
+    [action] => fetch_asset
+    [customer_id] => 1
+    [tag_id] => fkdhdjshdjejeje
+    [fetch_type] => asset_id
+)
+
+Array
+(
+    [action] => fetch_asset
+    [customer_id] => 1
+    [tag_id] => hddufuud
+    [fetch_type] => asset_id
+)
+
+Array
+(
+    [action] => fetch_asset
+    [customer_id] => 1
+    [tag_id] => 123
+    [fetch_type] => asset_id
+)
+
+Array
+(
+    [action] => fetch_asset
+    [customer_id] => 1
+    [tag_id] => 3610264251
+    [fetch_type] => tag
+)
+
+Array
+(
+    [action] => fetch_asset
+    [customer_id] => 1
+    [tag_id] => 3661026425
+    [fetch_type] => tag
+)
+
+Array
+(
+    [action] => fetch_asset
+    [customer_id] => 1
+    [tag_id] => 3610264251
+    [fetch_type] => asset_id
+)
+
+Array
+(
+    [action] => fetch_asset
+    [customer_id] => 1
+    [tag_id] => 361026425
+    [fetch_type] => tag
+)
+
+Array
+(
+    [action] => fetch_asset
+    [customer_id] => 1
+    [tag_id] => 1234567890
+    [fetch_type] => asset_id
+)
+
+Array
+(
+    [action] => fetch_asset
+    [customer_id] => 1
+    [tag_id] => 123sure
+    [fetch_type] => asset_id
+)

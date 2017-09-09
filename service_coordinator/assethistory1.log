@@ -1,0 +1,292 @@
+
+Array
+(
+    [12] => 
+)
+SELECT a.*, b.item_name
+						FROM  spare_request a, item_master b
+						WHERE  a.ticket_id IN () AND a.item_master_id = b.item_master_id
+Array
+(
+    [] => 
+)
+SELECT a.ticket_id,a.ticket_status, a.remarks, a.machine_reading, a.visit_date, a.creation_date,  f.complaint_name, g.employee_name as sc_name, h.employee_name as engr_name
+		FROM raise_ticket a, nature_of_comp f, employee_master g, employee_master h
+		WHERE  a.complaint_id = f.NCMPLTID AND a.sc_id = g.employee_master_id AND a.engineer_id = h.employee_master_id AND ticket_id != 15 AND a.asset_master_id = (SELECT asset_master_id FROM raise_ticket WHERE ticket_id = 15)
+Array
+(
+)
+SELECT a.ticket_id,a.ticket_status, a.remarks, a.machine_reading, a.visit_date, a.creation_date,  f.complaint_name, g.employee_name as sc_name, h.employee_name as engr_name
+		FROM raise_ticket a, nature_of_comp f, employee_master g, employee_master h
+		WHERE  a.complaint_id = f.NCMPLTID AND a.sc_id = g.employee_master_id AND a.engineer_id = h.employee_master_id AND ticket_id != 12 AND a.asset_master_id = (SELECT asset_master_id FROM raise_ticket WHERE ticket_id = 12)
+Array
+(
+    [] => 
+)
+SELECT a.*, b.item_name
+						FROM  spare_request a, item_master b
+						WHERE  a.ticket_id IN () AND a.item_master_id = b.item_master_id
+Array
+(
+    [] => 
+)
+SELECT a.ticket_id,a.ticket_status, a.remarks, a.machine_reading, a.visit_date, a.creation_date,  f.complaint_name, g.employee_name as sc_name, h.employee_name as engr_name
+		FROM raise_ticket a, nature_of_comp f, employee_master g, employee_master h
+		WHERE  a.complaint_id = f.NCMPLTID AND a.sc_id = g.employee_master_id AND a.engineer_id = h.employee_master_id AND ticket_id != 12 AND a.asset_master_id = (SELECT asset_master_id FROM raise_ticket WHERE ticket_id = 12)
+Array
+(
+    [14] => Array
+        (
+            [ticket_id] => 14
+            [ticket_status] => engineerclosed
+            [remarks] => 
+            [machine_reading] => 0
+            [visit_date] => 2017-01-25
+            [creation_date] => 2017-01-21 08:44:29
+            [complaint_name] => E677
+            [sc_name] => SC
+            [engr_name] => Engr
+        )
+
+    [17] => Array
+        (
+            [ticket_id] => 17
+            [ticket_status] => sparespending
+            [remarks] => Verified
+            [machine_reading] => 15645
+            [visit_date] => 2017-01-23
+            [creation_date] => 2017-01-21 08:55:03
+            [complaint_name] => Keyboard Problem
+            [sc_name] => SC
+            [engr_name] => Engr
+        )
+
+    [19] => Array
+        (
+            [ticket_id] => 19
+            [ticket_status] => assigned
+            [remarks] => 
+            [machine_reading] => 11111
+            [visit_date] => 2017-02-09
+            [creation_date] => 2017-02-01 15:11:09
+            [complaint_name] => C26 / C28
+            [sc_name] => SC
+            [engr_name] => Engr
+        )
+
+)
+SELECT a.*, b.item_name
+						FROM  spare_request a, item_master b
+						WHERE  a.ticket_id IN () AND a.item_master_id = b.item_master_id
+Array
+(
+    [14] => Array
+        (
+            [ticket_id] => 14
+            [ticket_status] => engineerclosed
+            [remarks] => 
+            [machine_reading] => 0
+            [visit_date] => 2017-01-25
+            [creation_date] => 2017-01-21 08:44:29
+            [complaint_name] => E677
+            [sc_name] => SC
+            [engr_name] => Engr
+        )
+
+    [17] => Array
+        (
+            [ticket_id] => 17
+            [ticket_status] => sparespending
+            [remarks] => Verified
+            [machine_reading] => 15645
+            [visit_date] => 2017-01-23
+            [creation_date] => 2017-01-21 08:55:03
+            [complaint_name] => Keyboard Problem
+            [sc_name] => SC
+            [engr_name] => Engr
+        )
+
+    [19] => Array
+        (
+            [ticket_id] => 19
+            [ticket_status] => assigned
+            [remarks] => 
+            [machine_reading] => 11111
+            [visit_date] => 2017-02-09
+            [creation_date] => 2017-02-01 15:11:09
+            [complaint_name] => C26 / C28
+            [sc_name] => SC
+            [engr_name] => Engr
+        )
+
+)
+SELECT a.ticket_id,a.ticket_status, a.remarks, a.machine_reading, a.visit_date, a.creation_date,  f.complaint_name, g.employee_name as sc_name, h.employee_name as engr_name
+		FROM raise_ticket a, nature_of_comp f, employee_master g, employee_master h
+		WHERE  a.complaint_id = f.NCMPLTID AND a.sc_id = g.employee_master_id AND a.engineer_id = h.employee_master_id AND ticket_id != 12 AND a.asset_master_id = (SELECT asset_master_id FROM raise_ticket WHERE ticket_id = 12)
+Array
+(
+    [14] => Array
+        (
+            [ticket_id] => 14
+            [ticket_status] => engineerclosed
+            [remarks] => 
+            [machine_reading] => 0
+            [visit_date] => 2017-01-25
+            [creation_date] => 2017-01-21 08:44:29
+            [complaint_name] => E677
+            [sc_name] => SC
+            [engr_name] => Engr
+        )
+
+    [17] => Array
+        (
+            [ticket_id] => 17
+            [ticket_status] => sparespending
+            [remarks] => Verified
+            [machine_reading] => 15645
+            [visit_date] => 2017-01-23
+            [creation_date] => 2017-01-21 08:55:03
+            [complaint_name] => Keyboard Problem
+            [sc_name] => SC
+            [engr_name] => Engr
+        )
+
+    [19] => Array
+        (
+            [ticket_id] => 19
+            [ticket_status] => assigned
+            [remarks] => 
+            [machine_reading] => 11111
+            [visit_date] => 2017-02-09
+            [creation_date] => 2017-02-01 15:11:09
+            [complaint_name] => C26 / C28
+            [sc_name] => SC
+            [engr_name] => Engr
+        )
+
+)
+SELECT a.*, b.item_name
+						FROM  spare_request a, item_master b
+						WHERE  a.ticket_id IN (14,17,19) AND a.item_master_id = b.item_master_id
+Array
+(
+    [14] => Array
+        (
+            [ticket_id] => 14
+            [ticket_status] => engineerclosed
+            [remarks] => 
+            [machine_reading] => 0
+            [visit_date] => 2017-01-25
+            [creation_date] => 2017-01-21 08:44:29
+            [complaint_name] => E677
+            [sc_name] => SC
+            [engr_name] => Engr
+            [spare_data] => Array
+                (
+                    [6] => Array
+                        (
+                            [spare_request_id] => 6
+                            [ticket_id] => 14
+                            [item_master_id] => 3
+                            [quantity] => 1
+                            [issued_quantity] => 0
+                            [replaced_quantity] => 0
+                            [returned_quantity] => 0
+                            [spare_status] => pending
+                            [sc_id] => 0
+                            [engineer_id] => 3
+                            [raised_by] => Engineer
+                            [spare_remark] => 
+                            [return_status] => 
+                            [item_name] => 1600 DRUM
+                        )
+
+                    [11] => Array
+                        (
+                            [spare_request_id] => 11
+                            [ticket_id] => 14
+                            [item_master_id] => 6
+                            [quantity] => 1
+                            [issued_quantity] => 0
+                            [replaced_quantity] => 0
+                            [returned_quantity] => 0
+                            [spare_status] => replaced
+                            [sc_id] => 0
+                            [engineer_id] => 3
+                            [raised_by] => Engineer
+                            [spare_remark] => 
+                            [return_status] => 
+                            [item_name] => ADF BOARD(RC)
+                        )
+
+                    [12] => Array
+                        (
+                            [spare_request_id] => 12
+                            [ticket_id] => 14
+                            [item_master_id] => 7
+                            [quantity] => 2
+                            [issued_quantity] => 0
+                            [replaced_quantity] => 0
+                            [returned_quantity] => 0
+                            [spare_status] => pending
+                            [sc_id] => 0
+                            [engineer_id] => 3
+                            [raised_by] => Engineer
+                            [spare_remark] => 
+                            [return_status] => 
+                            [item_name] => CLUTCH(RC)
+                        )
+
+                )
+
+        )
+
+    [17] => Array
+        (
+            [ticket_id] => 17
+            [ticket_status] => sparespending
+            [remarks] => Verified
+            [machine_reading] => 15645
+            [visit_date] => 2017-01-23
+            [creation_date] => 2017-01-21 08:55:03
+            [complaint_name] => Keyboard Problem
+            [sc_name] => SC
+            [engr_name] => Engr
+            [spare_data] => Array
+                (
+                    [7] => Array
+                        (
+                            [spare_request_id] => 7
+                            [ticket_id] => 17
+                            [item_master_id] => 8
+                            [quantity] => 2
+                            [issued_quantity] => 1
+                            [replaced_quantity] => 1
+                            [returned_quantity] => 0
+                            [spare_status] => partiallyissued
+                            [sc_id] => 1
+                            [engineer_id] => 0
+                            [raised_by] => SC
+                            [spare_remark] => 
+                            [return_status] => 
+                            [item_name] => GEAR ASSEMBLY(RC)
+                        )
+
+                )
+
+        )
+
+    [19] => Array
+        (
+            [ticket_id] => 19
+            [ticket_status] => assigned
+            [remarks] => 
+            [machine_reading] => 11111
+            [visit_date] => 2017-02-09
+            [creation_date] => 2017-02-01 15:11:09
+            [complaint_name] => C26 / C28
+            [sc_name] => SC
+            [engr_name] => Engr
+        )
+
+)

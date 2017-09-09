@@ -1,0 +1,141 @@
+
+Array
+(
+    [14] => Array
+        (
+            [ticket_id] => 14
+            [ticket_status] => engineerclosed
+            [remarks] => 
+            [machine_reading] => 0
+            [visit_date] => 2017-01-25
+            [creation_date] => 2017-01-21 08:44:29
+            [complaint_name] => E677
+            [sc_name] => SC
+            [engr_name] => Engr
+            [spare_data] => Array
+                (
+                    [6] => Array
+                        (
+                            [spare_request_id] => 6
+                            [ticket_id] => 14
+                            [item_master_id] => 3
+                            [quantity] => 1
+                            [issued_quantity] => 0
+                            [replaced_quantity] => 0
+                            [returned_quantity] => 0
+                            [spare_status] => pending
+                            [sc_id] => 0
+                            [engineer_id] => 3
+                            [raised_by] => Engineer
+                            [spare_remark] => 
+                            [return_status] => 
+                            [item_name] => 1600 DRUM
+                        )
+
+                    [11] => Array
+                        (
+                            [spare_request_id] => 11
+                            [ticket_id] => 14
+                            [item_master_id] => 6
+                            [quantity] => 1
+                            [issued_quantity] => 0
+                            [replaced_quantity] => 0
+                            [returned_quantity] => 0
+                            [spare_status] => replaced
+                            [sc_id] => 0
+                            [engineer_id] => 3
+                            [raised_by] => Engineer
+                            [spare_remark] => 
+                            [return_status] => 
+                            [item_name] => ADF BOARD(RC)
+                        )
+
+                    [12] => Array
+                        (
+                            [spare_request_id] => 12
+                            [ticket_id] => 14
+                            [item_master_id] => 7
+                            [quantity] => 2
+                            [issued_quantity] => 0
+                            [replaced_quantity] => 0
+                            [returned_quantity] => 0
+                            [spare_status] => pending
+                            [sc_id] => 0
+                            [engineer_id] => 3
+                            [raised_by] => Engineer
+                            [spare_remark] => 
+                            [return_status] => 
+                            [item_name] => CLUTCH(RC)
+                        )
+
+                )
+
+        )
+
+    [17] => Array
+        (
+            [ticket_id] => 17
+            [ticket_status] => sparespending
+            [remarks] => Verified
+            [machine_reading] => 15645
+            [visit_date] => 2017-01-23
+            [creation_date] => 2017-01-21 08:55:03
+            [complaint_name] => Keyboard Problem
+            [sc_name] => SC
+            [engr_name] => Engr
+            [spare_data] => Array
+                (
+                    [7] => Array
+                        (
+                            [spare_request_id] => 7
+                            [ticket_id] => 17
+                            [item_master_id] => 8
+                            [quantity] => 2
+                            [issued_quantity] => 1
+                            [replaced_quantity] => 1
+                            [returned_quantity] => 0
+                            [spare_status] => partiallyissued
+                            [sc_id] => 1
+                            [engineer_id] => 0
+                            [raised_by] => SC
+                            [spare_remark] => 
+                            [return_status] => 
+                            [item_name] => GEAR ASSEMBLY(RC)
+                        )
+
+                )
+
+            [call_report] => Array
+                (
+                    [2] => Array
+                        (
+                            [call_report_id] => 2
+                            [ticket_id] => 17
+                            [engineer_id] => 3
+                            [opening_reading] => 123
+                            [closing_reading] => 156
+                            [visit_date] => 2017-01-21
+                            [start_time] => 11:00
+                            [end_time] => 12:00
+                            [remarks] => 
+                            [employee_name] => Engr
+                        )
+
+                )
+
+        )
+
+    [19] => Array
+        (
+            [ticket_id] => 19
+            [ticket_status] => assigned
+            [remarks] => 
+            [machine_reading] => 11111
+            [visit_date] => 2017-02-09
+            [creation_date] => 2017-02-01 15:11:09
+            [complaint_name] => C26 / C28
+            [sc_name] => SC
+            [engr_name] => Engr
+        )
+
+)
