@@ -251,7 +251,7 @@ function displayEmployeeTable(employeeData){
       output += '<td>' + employeeData[employee].employee_name + '</td>';
       output += '<td>' + employeeData[employee].designation + '</td>';
       output += '<td>';
-        output += '<select name="present_absent[]" id="present_absent_'+count+'" class="select_present_absent"  >';
+        output += '<select name="present_absent[]" id="present_absent_'+count+'" class="select_present_absent form-control"  >';
           output += '<option value="">Select...</option>';
           output += '<option value="present" selected="selected">Present</option>';
           output += '<option value="absent">Absent</option>';
@@ -260,17 +260,19 @@ function displayEmployeeTable(employeeData){
       output += '<td>';
         output += '<div id="present_fields_'+count+'" class="present_absent_fields present_fields">';
           output += '<label id="entry_time_lbl_'+count+'">Entry Time:</label>';
-          output += '<input type="text" value="09:30 AM" class="entry_time_class" name="entry_time[]" id="entry_time_'+count+'" /><br/>';
+          output += '<input type="text" value="09:30 AM" class="form-control entry_time_class" name="entry_time[]" id="entry_time_'+count+'" /><br/>';
           output += '<label id="exit_time_lbl_'+count+'">Exit Time:</label>';
           output += '<input type="text" value="06:00 PM" class="exit_time_class" name="exit_time[]" id="exit_time_'+count+'"  /><br/>';
           output += '<label id="late_by_lbl_'+count+'">Late By:</label>';
-          output += '<input type="text" name="late_by[]" id="late_by_'+count+'" disabled /><br/>';
+          output += '<input type="text" name="late_by[]" id="late_by_'+count+'" readonly /><br/>';
         output += '</div>';
         output += '<div id="absent_fields_'+count+'" class="present_absent_fields absent_fields">';
           output += '<label id="reason_lbl_'+count+'">Reason:</label>';
           output += '<input type="text" name="reason[]" id="reason_'+count+'" /><br/>';
           output += '<label id="informed_uninformed_lbl_'+count+'">Informed/Uniformed:</label>';
-          output += '<input type="text" name="informed_uninformed[]" id="informed_uninformed_'+count+'" /><br/>';
+          output += '<input type="radio" name="informed_uninformed[]" class="informed_uninformed_radio" id="informed_uninformed_info_'+count+'" value="Informed" /> Informed &nbsp&nbsp';
+          output += '<input type="radio" name="informed_uninformed[]" class="informed_uninformed_radio" id="informed_uninformed_uninfo_'+count+'" value="Uninformed"/> Uninformed </br>';
+          output += '<input type="hidden" value="Informed" class="info_uninfo" name="informed_uninformed_val[]" id="informed_uninformed_val_'+count+'" />';
         output += '</div>';  
       output += '</td>';
     output += '</tr>';
@@ -287,6 +289,7 @@ function displayEmployeeTable(employeeData){
 }
 
 function bindEmployeeListEvents(){
+
   $('.employee_select_checkbox').on("change", function() {
     var presentAbsentCheckBoxID = $(this).attr("id");
     var presentAbsentCheckBoxVal = $('#'+presentAbsentCheckBoxID).val();
@@ -318,8 +321,15 @@ function bindEmployeeListEvents(){
     $('#exit_time_'+ idCountVal).val('');
     $('#late_by_'+ idCountVal).val('');
     $('#reason_'+ idCountVal).val('');
-    $('#informed_uninformed_'+ idCountVal).val('');
+    $('#informed_uninformed_val_'+ idCountVal).val('');
+  });
 
+  $('.informed_uninformed_radio').on("change", function(){
+    var presentAbsentCheckBoxID = $(this).attr("id");
+    var presentAbsentCheckBoxVal = $('#'+presentAbsentCheckBoxID).val();
+    var presentAbsentCheckBoxIDArray = presentAbsentCheckBoxID.split('_'); 
+    var idCountVal = presentAbsentCheckBoxIDArray[presentAbsentCheckBoxIDArray.length-1];
+    $('#informed_uninformed_val_' + idCountVal).val($(this).val());
   });
 }
 
@@ -492,13 +502,23 @@ function displayEditAttendanceDetailFields(attendanceDetail){
     output += '<label id="exit_time_lbl">Exit Time:</label>';
     output += '<input type="text" name="exit_time" id="exit_time" value="'+attendanceDetail.exit_time+'" /><br/>';
     output += '<label id="late_by_lbl">Late By:</label>';
-    output += '<input type="text" name="late_by" id="late_by" disabled value="'+attendanceDetail.late_by+'" /><br/>';
+    output += '<input type="text" name="late_by" id="late_by" readonly value="'+attendanceDetail.late_by+'" /><br/>';
   output += '</div>';
   output += '<div id="absent_fields_edit" class="present_absent_fields_edit">';
     output += '<label id="reason_lbl">Reason:</label>';
     output += '<input type="text" name="reason" id="reason" value="'+attendanceDetail.reason+'" /><br/>';
     output += '<label id="informed_uninformed_lbl">Informed/Uniformed:</label>';
-    output += '<input type="text" name="informed_uninformed" id="informed_uninformed" value="'+attendanceDetail.informed_uninformed+'" /><br/>';
+
+    if(attendanceDetail.informed_uninformed == 'Informed'){
+      output += '<input type="radio" name="informed_uninformed[]" class="informed_uninformed_radio" id="informed_uninformed_info" value="Informed" checked /> Informed &nbsp&nbsp';
+      output += '<input type="radio" name="informed_uninformed[]" class="informed_uninformed_radio" id="informed_uninformed_uninfo" value="Uninformed"/> Uninformed </br>';
+      output += '<input type="hidden" value="Informed" class="info_uninfo" name="informed_uninformed_val[]" id="informed_uninformed_val" />';
+    } else {
+      output += '<input type="radio" name="informed_uninformed[]" class="informed_uninformed_radio" id="informed_uninformed_info" value="Informed" /> Informed &nbsp&nbsp';
+      output += '<input type="radio" name="informed_uninformed[]" class="informed_uninformed_radio" id="informed_uninformed_uninfo" value="Uninformed" checked/> Uninformed </br>';
+      output += '<input type="hidden" value="Uninformed" class="info_uninfo" name="informed_uninformed_val" id="informed_uninformed_val" />';
+    }
+    
   output += '</div>';  
   $('#edit_attendance_detail_div').html(output);
   $('#present_absent').val(attendanceDetail.present_absent);
@@ -526,6 +546,14 @@ function editAttendanceDetailBindEvents(){
     $('#late_by').val('');
     $('#reason').val('');
     $('#informed_uninformed').val('');
+  });
+
+  $('.informed_uninformed_radio').on("change", function(){
+    var presentAbsentCheckBoxID = $(this).attr("id");
+    var presentAbsentCheckBoxVal = $('#'+presentAbsentCheckBoxID).val();
+    var presentAbsentCheckBoxIDArray = presentAbsentCheckBoxID.split('_'); 
+    var idCountVal = presentAbsentCheckBoxIDArray[presentAbsentCheckBoxIDArray.length-1];
+    $('#informed_uninformed_val').val($(this).val());
   });
 }
 

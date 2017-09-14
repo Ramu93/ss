@@ -139,7 +139,7 @@
     $exitTime = $_POST['exit_time'];
     $lateBy = $_POST['late_by'];
     $reason = $_POST['reason'];
-    $informedUninformed = $_POST['informed_uninformed'];
+    $informedUninformed = $_POST['informed_uninformed_val'];
 
     for($index = 0; $index < count($employeeList); $index++){
       if($employeeList[$index]->isEmployeeSelected == 'true'){
@@ -201,7 +201,7 @@
     $exitTime = mysqli_real_escape_string($dbc,trim($_POST['exit_time']));
     $lateBy = mysqli_real_escape_string($dbc,trim($_POST['late_by']));
     $reason = mysqli_real_escape_string($dbc,trim($_POST['reason']));
-    $informedUninformed = mysqli_real_escape_string($dbc,trim($_POST['informed_uninformed']));
+    $informedUninformed = mysqli_real_escape_string($dbc,trim($_POST['informed_uninformed_val']));
 
     $updateAttendanceDetailQuery = "UPDATE hr_attendance SET present_absent='$presentAbsent', entry_time='$entryTime', exit_time='$exitTime', late_by='$lateBy', reason='$reason', informed_uninformed='$informedUninformed' WHERE hr_attendance_id='$attendanceID'";
     mysqli_query($dbc, $updateAttendanceDetailQuery);
