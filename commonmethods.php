@@ -1,8 +1,8 @@
 <?php
 $host = $_SERVER['HTTP_HOST'];
 //define('HOMEPATH','http://'.$host.'/samanapern/sbbs/');
-define('HOMEPATH','http://localhost:8888/sbbs/');
-define('DOCPATH',$_SERVER['DOCUMENT_ROOT'].'/sbbs/');
+define('HOMEPATH','http://localhost:8888/ss/');
+define('DOCPATH',$_SERVER['DOCUMENT_ROOT'].'/ss/');
 function hasPermission($rolename){
 	$roles = json_decode($_SESSION['role_permissions']);
 	$rolesplit = explode('__', $rolename);
