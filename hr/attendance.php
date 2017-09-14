@@ -175,6 +175,8 @@ $(document).ready(function(){
         autoclose: true
     });
 
+    $('.entry_time_class').val('09:30 AM');
+    $('.exit_time_class').val('06:00 PM');
 });
 
 $(window).bind("load", function() {
@@ -251,20 +253,20 @@ function displayEmployeeTable(employeeData){
       output += '<td>';
         output += '<select name="present_absent[]" id="present_absent_'+count+'" class="select_present_absent"  >';
           output += '<option value="">Select...</option>';
-          output += '<option value="present">Present</option>';
+          output += '<option value="present" selected="selected">Present</option>';
           output += '<option value="absent">Absent</option>';
         output += '</select>';
       output += '</td>';
       output += '<td>';
-        output += '<div id="present_fields_'+count+'" class="present_absent_fields">';
+        output += '<div id="present_fields_'+count+'" class="present_absent_fields present_fields">';
           output += '<label id="entry_time_lbl_'+count+'">Entry Time:</label>';
-          output += '<input type="text" name="entry_time[]" id="entry_time_'+count+'" /><br/>';
+          output += '<input type="text" value="09:30 AM" class="entry_time_class" name="entry_time[]" id="entry_time_'+count+'" /><br/>';
           output += '<label id="exit_time_lbl_'+count+'">Exit Time:</label>';
-          output += '<input type="text" name="exit_time[]" id="exit_time_'+count+'" /><br/>';
+          output += '<input type="text" value="06:00 PM" class="exit_time_class" name="exit_time[]" id="exit_time_'+count+'"  /><br/>';
           output += '<label id="late_by_lbl_'+count+'">Late By:</label>';
-          output += '<input type="text" name="late_by[]" id="late_by_'+count+'" /><br/>';
+          output += '<input type="text" name="late_by[]" id="late_by_'+count+'" disabled /><br/>';
         output += '</div>';
-        output += '<div id="absent_fields_'+count+'" class="present_absent_fields">';
+        output += '<div id="absent_fields_'+count+'" class="present_absent_fields absent_fields">';
           output += '<label id="reason_lbl_'+count+'">Reason:</label>';
           output += '<input type="text" name="reason[]" id="reason_'+count+'" /><br/>';
           output += '<label id="informed_uninformed_lbl_'+count+'">Informed/Uniformed:</label>';
@@ -277,7 +279,7 @@ function displayEmployeeTable(employeeData){
   output += '</table>';
   $('#employee_div').html(output);
   //hide all the present absent fields initially
-  $('.present_absent_fields').hide();
+  $('.absent_fields').hide();
   $('#employee_div').show();
   $('#save_btn_div').show();
   setDefaultEmployeeSelectValueFalse();
@@ -490,7 +492,7 @@ function displayEditAttendanceDetailFields(attendanceDetail){
     output += '<label id="exit_time_lbl">Exit Time:</label>';
     output += '<input type="text" name="exit_time" id="exit_time" value="'+attendanceDetail.exit_time+'" /><br/>';
     output += '<label id="late_by_lbl">Late By:</label>';
-    output += '<input type="text" name="late_by" id="late_by" value="'+attendanceDetail.late_by+'" /><br/>';
+    output += '<input type="text" name="late_by" id="late_by" disabled value="'+attendanceDetail.late_by+'" /><br/>';
   output += '</div>';
   output += '<div id="absent_fields_edit" class="present_absent_fields_edit">';
     output += '<label id="reason_lbl">Reason:</label>';
