@@ -171,7 +171,7 @@ $(document).ready(function(){
     $('#date').val(getCurrentDate());
 
     $('#date').datepicker({
-        format: 'yyyy-mm-dd',
+        format: 'dd-mm-yyyy',
         autoclose: true
     });
 
@@ -196,7 +196,7 @@ function getCurrentDate(){
   if(mm < 10){
     mm = '0' + mm;
   }
-  var todayDate = yy + '-' + mm + '-' + dd;
+  var todayDate = dd + '-' + mm + '-' + yy;
   return todayDate;
 }
 

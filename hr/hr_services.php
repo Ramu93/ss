@@ -130,7 +130,8 @@
   function saveAttendance(){
     global $dbc;
     $employeeList = json_decode($_POST['employee_list']);
-    $attendanceDate = mysqli_real_escape_string($dbc,trim($_POST['date']));
+    $attendanceDate = strtotime(mysqli_real_escape_string($dbc,trim($_POST['date'])));
+    $attendanceDate = date('Y-m-d', $attendanceDate);
     $department = mysqli_real_escape_string($dbc,trim($_POST['department']));
     $office = mysqli_real_escape_string($dbc,trim($_POST['office']));
     $location = mysqli_real_escape_string($dbc,trim($_POST['location']));
@@ -156,7 +157,8 @@
 
   function viewAttendance(){
     global $dbc;
-    $attendanceDate = mysqli_real_escape_string($dbc,trim($_POST['date']));
+    $attendanceDate = strtotime(mysqli_real_escape_string($dbc,trim($_POST['date'])));
+    $attendanceDate = date('Y-m-d', $attendanceDate);
     $department = mysqli_real_escape_string($dbc,trim($_POST['department']));
     $office = mysqli_real_escape_string($dbc,trim($_POST['office']));
     $location = mysqli_real_escape_string($dbc,trim($_POST['location']));
@@ -223,7 +225,11 @@
 
   function saveSalary(){
     global $dbc;
-    $empId = mysqli_real_escape_string($dbc,trim($_POST['emp_id']));    
+    $empId = mysqli_real_escape_string($dbc,trim($_POST['emp_id'])); 
+    $paymentMode = mysqli_real_escape_string($dbc,trim($_POST['payment_mode']));
+    $bankAccNumber = mysqli_real_escape_string($dbc,trim($_POST['bank_acc_number']));
+    $bankName = mysqli_real_escape_string($dbc,trim($_POST['bank_name']));
+    $bankIfsc = mysqli_real_escape_string($dbc,trim($_POST['ifsc']));
     $salaryInfo = json_decode($_POST['salary_info']);
 
     $basic_monthly = $salaryInfo->basic_monthly;
@@ -247,7 +253,7 @@
     $net_pay = $salaryInfo->net_pay;
     $salary_date = date("Y-m-d");
 
-    $saveSalaryQuery = "INSERT INTO hr_salary_process (emp_id, salary_date, basic_monthly, hra, special_allowance, vm, advance, pf, esi, professional_tax, od, tds, employer_pf, employer_esi, working_days, lop, lop_amount, earnings_per_day, total_earnings, total_deductions, net_pay) VALUES ('$empId', '$salary_date', '$basic_monthly', '$hra', '$special_allowance', '$vm', '$advance', '$pf', '$esi', '$professional_tax', '$od', '$tds', '$employer_pf', '$employer_esi', '$working_days', '$lop', '$lop_amount', '$earnings_per_day', '$total_earnings', '$total_deductions', '$net_pay')";
+    $saveSalaryQuery = "INSERT INTO hr_salary_process (emp_id, payment_mode, bank_acc_num, bank_name, bank_ifsc, salary_date, basic_monthly, hra, special_allowance, vm, advance, pf, esi, professional_tax, od, tds, employer_pf, employer_esi, working_days, lop, lop_amount, earnings_per_day, total_earnings, total_deductions, net_pay) VALUES ('$empId', '$paymentMode', '$bankAccNumber', '$bankName', '$bankIfsc', '$salary_date', '$basic_monthly', '$hra', '$special_allowance', '$vm', '$advance', '$pf', '$esi', '$professional_tax', '$od', '$tds', '$employer_pf', '$employer_esi', '$working_days', '$lop', '$lop_amount', '$earnings_per_day', '$total_earnings', '$total_deductions', '$net_pay')";
     mysqli_query($dbc, $saveSalaryQuery);
     $output = array("infocode" => "SAVESALARYSUCCESS", "message" => "Salary information saved successfuly.");
     return $output;

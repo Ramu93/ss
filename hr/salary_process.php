@@ -75,6 +75,36 @@ include('..'.DIRECTORY_SEPARATOR.'sidebar.php');
         </div>
 			</form>
       <form id="employee_salary_form" name="employee_salary_form" method="post" class="form-horizontal" action="" onsubmit="return false;">
+        <div class="control-group">
+          <label class="control-label">Payment Mode:</label>
+          <div class="controls">
+            <select class="form-control required" name="payment_mode" id="payment_mode">
+              <option value="" selected="selected">Select payment mode...</option>
+              <option value="Bank">Bank</option>
+              <option value="Cash">Cash</option>
+            </select>
+          </div>
+        </div>
+        <div id="bank_details_div">
+          <div class="control-group">
+            <label class="control-label">Bank Account Number:</label>
+            <div class="controls">
+                 <input type="text" class="form-control number" name="bank_acc_number" id="bank_acc_number" placeholder="Bank Account Number" />
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Bank Name:</label>
+            <div class="controls">
+                 <input type="text" class="form-control" name="bank_name" id="bank_name" placeholder="Bank name" />
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">IFSC Code:</label>
+            <div class="controls">
+                 <input type="text" class="form-control" name="ifsc" id="ifsc" placeholder="IFSC" />
+            </div>
+          </div>
+        </div>
         <input type="hidden" name="emp_id" id='emp_id'>
         <div class="control-group">
           <label class="control-label">Number of Working Days:</label>
@@ -194,6 +224,15 @@ $(document).ready(function(){
         autoclose: true
     });
 
+    $('#bank_details_div').hide();
+    $('#payment_mode').on('change', function(){
+      var paymentMode = $(this).val();
+      if(paymentMode == 'Bank'){
+        $('#bank_details_div').show();
+      } else{
+        $('#bank_details_div').hide();
+      }
+    });
 });
 
 $(window).bind("load", function() {
@@ -370,7 +409,7 @@ function computeNetPay(){
     gSalaryInfo.lop = lop;
     gSalaryInfo.lop_amount = lopAmount;
     gSalaryInfo.working_days = workingDays;
-    gSalaryInfo.earnings_per_dayay = earningsPerDay;
+    gSalaryInfo.earnings_per_day = earningsPerDay;
     gSalaryInfo.total_earnings = totalEarnings;
     gSalaryInfo.total_deductions = totalDeductions;
     gSalaryInfo.net_pay = netPay;
