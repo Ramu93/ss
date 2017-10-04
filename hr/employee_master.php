@@ -116,6 +116,26 @@ include('..'.DIRECTORY_SEPARATOR.'sidebar.php');
             </select>
           </div>
         </div>
+        <div id="bank_details_div">
+          <div class="control-group">
+            <label class="control-label">Bank Account Number:</label>
+            <div class="controls">
+                 <input type="text" class="form-control number" name="bank_acc_number" id="bank_acc_number" placeholder="Bank Account Number" />
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Bank Name:</label>
+            <div class="controls">
+                 <input type="text" class="form-control" name="bank_name" id="bank_name" placeholder="Bank name" />
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">IFSC Code:</label>
+            <div class="controls">
+                 <input type="text" class="form-control" name="ifsc" id="ifsc" placeholder="IFSC" />
+            </div>
+          </div>
+        </div>
         <div class="control-group">
           <label class="control-label">CTC Monthly:</label>
           <div class="controls">
@@ -174,6 +194,16 @@ $(document).ready(function(){
         format: 'yyyy-mm-dd',
         autoclose: true,
         maxDate: 'now'
+    });
+
+    $('#bank_details_div').hide();
+    $('#payment_mode').on('change', function(){
+      var paymentMode = $(this).val();
+      if(paymentMode == 'Bank'){
+        $('#bank_details_div').show();
+      } else{
+        $('#bank_details_div').hide();
+      }
     });
 });
 

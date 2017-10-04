@@ -65,8 +65,11 @@
     $qualification = mysqli_real_escape_string($dbc,trim($_POST['qualification']));
     $experience = mysqli_real_escape_string($dbc,trim($_POST['experience']));
     $department = mysqli_real_escape_string($dbc, trim($_POST['department']));
+    $bankAccNumber = mysqli_real_escape_string($dbc,trim($_POST['bank_acc_number']));
+    $bankName = mysqli_real_escape_string($dbc,trim($_POST['bank_name']));
+    $bankIfsc = mysqli_real_escape_string($dbc,trim($_POST['ifsc']));
 
-    $addEmployeeQuery = "INSERT INTO hr_employee_master (employee_name, dob, communication_address, pan_details, aadhar_details, emp_id, office, location, designation, payment_mode, ctc_monthly, doj, qualification, experience, department) VALUES ('$employeeName','$dob', '$communicationAddress', '$panDetails', '$aadharDetails', '$empID', '$office', '$location', '$designation', '$paymentMode', '$ctcMonthly', '$doj', '$qualification', '$experience', '$department')";
+    $addEmployeeQuery = "INSERT INTO hr_employee_master (employee_name, dob, communication_address, pan_details, aadhar_details, emp_id, office, location, designation, payment_mode, bank_acc_num, bank_name, bank_ifsc, ctc_monthly, doj, qualification, experience, department) VALUES ('$employeeName','$dob', '$communicationAddress', '$panDetails', '$aadharDetails', '$empID', '$office', '$location', '$designation', '$paymentMode', '$bankAccNumber', '$bankName', '$bankIfsc', '$ctcMonthly', '$doj', '$qualification', '$experience', '$department')";
 
   	if(mysqli_query($dbc, $addEmployeeQuery)){
   		$output = array("infocode" => "EMPLOYEEADDED", "message" => "Employee added succesfully.");
@@ -94,8 +97,11 @@
     $qualification = mysqli_real_escape_string($dbc,trim($_POST['qualification']));
     $experience = mysqli_real_escape_string($dbc,trim($_POST['experience']));
     $department = mysqli_real_escape_string($dbc, trim($_POST['department']));
+    $bankAccNumber = mysqli_real_escape_string($dbc,trim($_POST['bank_acc_number']));
+    $bankName = mysqli_real_escape_string($dbc,trim($_POST['bank_name']));
+    $bankIfsc = mysqli_real_escape_string($dbc,trim($_POST['ifsc']));
 
-    $updateEmpoyeeQuery = "UPDATE hr_employee_master SET employee_name='$employeeName', dob='$dob', communication_address='$communicationAddress', pan_details='$panDetails', aadhar_details='$aadharDetails', office='$office', location='$location', designation='$designation', payment_mode='$paymentMode', ctc_monthly='$ctcMonthly', doj='$doj', qualification='$qualification', experience='$experience', department='$department' WHERE emp_id='$empID'";
+    $updateEmpoyeeQuery = "UPDATE hr_employee_master SET employee_name='$employeeName', dob='$dob', communication_address='$communicationAddress', pan_details='$panDetails', aadhar_details='$aadharDetails', office='$office', location='$location', designation='$designation', payment_mode='$paymentMode', ctc_monthly='$ctcMonthly', doj='$doj', qualification='$qualification', experience='$experience', department='$department', bank_acc_num='$bankAccNumber', bank_name='$bankName', bank_ifsc='$bankIfsc' WHERE emp_id='$empID'";
 
     if(mysqli_query($dbc, $updateEmpoyeeQuery)){
       $output = array("infocode" => "EMPLOYEEUPDATED", "message" => "Employee updated succesfully.");

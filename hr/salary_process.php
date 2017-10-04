@@ -349,6 +349,12 @@ function displayEmployeeDetails(employee){
     output += '<label class="control-label">'+employee.ctc_monthly+'</label>';
   output += '</div>';
 
+  if(employee.payment_mode == 'Bank'){
+    $('#bank_acc_number').val(employee.bank_acc_num);
+    $('#bank_name').val(employee.bank_name);
+    $('#ifsc').val(employee.bank_ifsc);
+  }
+
   $('#employee_details_div').html(output);
   $('employee_details_div').show();
   $('#employee_salary_form').show();

@@ -18,6 +18,11 @@ $out = array();
 if(mysqli_num_rows($result)>0){
     $row = mysqli_fetch_assoc($result);
     $out = $row;
+    if($out['payment_mode'] != 'Bank'){
+      $out['bank_acc_num'] = '';
+      $out['bank_name'] = '';
+      $out['bank_ifsc'] = '';
+    }
 }
 
 
@@ -118,13 +123,33 @@ if(mysqli_num_rows($result)>0){
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label">Payment Mode/Bank Details:</label>
+          <label class="control-label">Payment Mode:</label>
           <div class="controls">
               <select class="form-control required" name="payment_mode" id="payment_mode">
                 <option value="" selected="selected">Select payment mode...</option>
                 <option value="Bank" <?php echo ('Bank'==$out['payment_mode'])?'selected="selected"':''; ?> >Bank</option>
                 <option value="Cash" <?php echo ('Cash'==$out['payment_mode'])?'selected="selected"':''; ?> >Cash</option>
               </select>
+          </div>
+        </div>
+        <div id="bank_details_div">
+          <div class="control-group">
+            <label class="control-label">Bank Account Number:</label>
+            <div class="controls">
+                 <input type="text" class="form-control number" name="bank_acc_number" id="bank_acc_number" value="<?php echo $out['bank_acc_num']; ?>" placeholder="Bank Account Number" />
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Bank Name:</label>
+            <div class="controls">
+                 <input type="text" class="form-control" name="bank_name" id="bank_name" value="<?php echo $out['bank_name']; ?>" placeholder="Bank name" />
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">IFSC Code:</label>
+            <div class="controls">
+                 <input type="text" class="form-control" name="ifsc" id="ifsc" value="<?php echo $out['bank_ifsc']; ?>" placeholder="IFSC" />
+            </div>
           </div>
         </div>
         <div class="control-group">
@@ -183,6 +208,18 @@ $(document).ready(function(){
     $('#doj').datepicker({
         format: 'yyyy-mm-dd',
         autoclose: true
+    });
+    
+    <?php if($out['payment_mode'] != 'Bank'){ ?>
+    $('#bank_details_div').hide();
+    <?php } ?>
+    $('#payment_mode').on('change', function(){
+      var paymentMode = $(this).val();
+      if(paymentMode == 'Bank'){
+        $('#bank_details_div').show();
+      } else{
+        $('#bank_details_div').hide();
+      }
     });
 });
 
