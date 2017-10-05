@@ -42,6 +42,9 @@
     case 'get_emp_salary_detail':
         $finaloutput = getEmployeeSalaryDetail();
     break;
+    case 'add_advance':
+        $finaloutput = addAdvance();
+    break;
     default:
           $finaloutput = array("infocode" => "INVALIDACTION", "message" => "Irrelevant action");
   }
@@ -51,7 +54,7 @@
   function addEmployee(){
     global $dbc;
     $employeeName = mysqli_real_escape_string($dbc,trim($_POST['employee_name']));
-    $dob = mysqli_real_escape_string($dbc,trim($_POST['dob']));
+    $dob = date('Y-m-d', strtotime(mysqli_real_escape_string($dbc,trim($_POST['dob']))));
     $communicationAddress = mysqli_real_escape_string($dbc, trim($_POST['communication_address']));
     $panDetails = mysqli_real_escape_string($dbc,trim($_POST['pan_details']));
     $aadharDetails = mysqli_real_escape_string($dbc,trim($_POST['aadhar_details']));
@@ -61,7 +64,7 @@
     $designation = mysqli_real_escape_string($dbc,trim($_POST['designation']));
     $paymentMode = mysqli_real_escape_string($dbc,trim($_POST['payment_mode']));
     $ctcMonthly = mysqli_real_escape_string($dbc,trim($_POST['ctc_monthly']));
-    $doj = mysqli_real_escape_string($dbc,trim($_POST['doj']));
+    $doj = date('Y-m-d', strtotime(mysqli_real_escape_string($dbc,trim($_POST['doj']))));
     $qualification = mysqli_real_escape_string($dbc,trim($_POST['qualification']));
     $experience = mysqli_real_escape_string($dbc,trim($_POST['experience']));
     $department = mysqli_real_escape_string($dbc, trim($_POST['department']));
@@ -83,7 +86,7 @@
   function updateEmployee(){
     global $dbc;
     $employeeName = mysqli_real_escape_string($dbc,trim($_POST['employee_name']));
-    $dob = mysqli_real_escape_string($dbc,trim($_POST['dob']));
+    $dob = date('Y-m-d', strtotime(mysqli_real_escape_string($dbc,trim($_POST['dob']))));
     $communicationAddress = mysqli_real_escape_string($dbc, trim($_POST['communication_address']));
     $panDetails = mysqli_real_escape_string($dbc,trim($_POST['pan_details']));
     $aadharDetails = mysqli_real_escape_string($dbc,trim($_POST['aadhar_details']));
@@ -93,7 +96,7 @@
     $designation = mysqli_real_escape_string($dbc,trim($_POST['designation']));
     $paymentMode = mysqli_real_escape_string($dbc,trim($_POST['payment_mode']));
     $ctcMonthly = mysqli_real_escape_string($dbc,trim($_POST['ctc_monthly']));
-    $doj = mysqli_real_escape_string($dbc,trim($_POST['doj']));
+    $doj = date('Y-m-d', strtotime(mysqli_real_escape_string($dbc,trim($_POST['doj']))));
     $qualification = mysqli_real_escape_string($dbc,trim($_POST['qualification']));
     $experience = mysqli_real_escape_string($dbc,trim($_POST['experience']));
     $department = mysqli_real_escape_string($dbc, trim($_POST['department']));
@@ -296,6 +299,11 @@
       $output = array("infocode" => "GETEMPLOYEESALARYFAILURE", "message" => "No salary details found, please try again!");
     }
     return $output;
+  }
+
+  function addAdvance(){
+    global $dbc;
+    $advanceDate = date('Y-m-d', strtotime(mysqli_real_escape_string($dbc,trim($_POST['advance_date']))));
   }
 
 ?>

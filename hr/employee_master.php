@@ -182,16 +182,16 @@ $(document).ready(function(){
     $('#addasset_form').validate();
     $('#li_sc_ticketmenu').addClass('active open');
     $('#contract_start_date').datepicker({
-        format: 'yyyy-mm-dd',
+        format: 'dd-mm-yyyy',
         autoclose: true
     });
     $('#dob').datepicker({
-        format: 'yyyy-mm-dd',
+        format: 'dd-mm-yyyy',
         autoclose: true,
         maxDate: 'now'
     });
     $('#doj').datepicker({
-        format: 'yyyy-mm-dd',
+        format: 'dd-mm-yyyy',
         autoclose: true,
         maxDate: 'now'
     });
