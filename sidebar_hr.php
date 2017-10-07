@@ -6,6 +6,7 @@
       <ul>
         <li><a href="<?php echo HOMEURL; ?>hr/employee_master.php" >Employee Master</a></li>
         <li><a href="<?php echo HOMEURL; ?>hr/attendance.php" >Attendance</a></li>
+        <li><a href="<?php echo HOMEURL; ?>hr/employee_advance.php">Employee Advance</a></li>
         <li><a href="<?php echo HOMEURL; ?>hr/salary_process.php">Salary Process</a></li>
       </ul>
     </li>

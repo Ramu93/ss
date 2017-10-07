@@ -75,7 +75,7 @@ include('..'.DIRECTORY_SEPARATOR.'sidebar.php');
         </div>
 			</form>
       <form id="employee_salary_form" name="employee_salary_form" method="post" class="form-horizontal" action="" onsubmit="return false;">
-        <div class="control-group">
+        <div class="control-group" id="payment_mode_div">
           <label class="control-label">Payment Mode:</label>
           <div class="controls">
             <select class="form-control required" name="payment_mode" id="payment_mode">
@@ -105,57 +105,59 @@ include('..'.DIRECTORY_SEPARATOR.'sidebar.php');
             </div>
           </div>
         </div>
-        <input type="hidden" name="emp_id" id='emp_id'>
-        <div class="control-group">
-          <label class="control-label">Number of Working Days:</label>
-          <div class="controls">
-            <input type="text" class="form-control required number" name="working_days" id="working_days" placeholder="Number of working days" />
+        <div id="other_salary_fields">
+          <input type="hidden" name="emp_id" id='emp_id'>
+          <div class="control-group">
+            <label class="control-label">Number of Working Days:</label>
+            <div class="controls">
+              <input type="text" class="form-control required number" name="working_days" id="working_days" placeholder="Number of working days" />
+            </div>
           </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label">Loss of Pay:</label>
-          <div class="controls">
-            <input type="text" class="form-control required number" name="lop" id="lop" placeholder="Loss of pay" />
+          <div class="control-group">
+            <label class="control-label">Loss of Pay:</label>
+            <div class="controls">
+              <input type="text" class="form-control required number" name="lop" id="lop" placeholder="Loss of pay" />
+            </div>
           </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label">Special Allowance:</label>
-          <div class="controls">
-            <input type="text" class="form-control required" name="special_allowance" id="special_allowance" placeholder="Special allowance" />
+          <div class="control-group">
+            <label class="control-label">Special Allowance:</label>
+            <div class="controls">
+              <input type="text" class="form-control required" name="special_allowance" id="special_allowance" placeholder="Special allowance" />
+            </div>
           </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label">Vehicle Maintenance:</label>
-          <div class="controls">
-            <input type="text" class="form-control required" name="vm" id="vm" placeholder="Vehicle maintenance" />
+          <div class="control-group">
+            <label class="control-label">Vehicle Maintenance:</label>
+            <div class="controls">
+              <input type="text" class="form-control required" name="vm" id="vm" placeholder="Vehicle maintenance" />
+            </div>
           </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label">Advance:</label>
-          <div class="controls">
-            <input type="text" class="form-control required" name="advance" id="advance" placeholder="Advance" />
+          <div class="control-group">
+            <label class="control-label">Advance:</label>
+            <div class="controls">
+              <input type="text" class="form-control required" name="advance" id="advance" placeholder="Advance" />
+            </div>
           </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label">Professional Tax:</label>
-          <div class="controls">
-            <input type="text" class="form-control required" name="professional_tax" id="professional_tax" placeholder="Professional tax" />
+          <div class="control-group">
+            <label class="control-label">Professional Tax:</label>
+            <div class="controls">
+              <input type="text" class="form-control required" name="professional_tax" id="professional_tax" placeholder="Professional tax" />
+            </div>
           </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label">OD:</label>
-          <div class="controls">
-            <input type="text" class="form-control required number" name="od" id="od" placeholder="OD" />
+          <div class="control-group">
+            <label class="control-label">OD:</label>
+            <div class="controls">
+              <input type="text" class="form-control required number" name="od" id="od" placeholder="OD" />
+            </div>
           </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label">TDS:</label>
-          <div class="controls">
-            <input type="text" class="form-control required number" name="tds" id="tds" placeholder="TDS" />
+          <div class="control-group">
+            <label class="control-label">TDS:</label>
+            <div class="controls">
+              <input type="text" class="form-control required number" name="tds" id="tds" placeholder="TDS" />
+            </div>
           </div>
         </div>
 
-        <div class="control-group row-fluid" style="padding-bottom: 10px;">
+        <div class="control-group row-fluid" id="compute_net_pay_btn_div" style="padding-bottom: 10px;">
           <div class="span4 text-right">
              <button type="button" class="btn btn-primary" onclick="computeNetPay();">Compute Net Pay</button>
              
@@ -316,8 +318,28 @@ function getSelectedEmployee(empID){
           var employee = JSON.parse(result.data);
           displayEmployeeDetails(employee);
           gEmployee = employee;
+          $('#payment_mode_div').show();
+          $('#compute_net_pay_btn_div').show();
+          $('#other_salary_fields').show();
       }else{
           bootbox.alert(result.message);
+      }
+      getAdvanceDetails(empID);
+    },
+    error: function(){}
+  });
+}
+
+function getAdvanceDetails(empID){
+  var data = "emp_id=" + empID + "&action=get_advance_details";
+  $.ajax({
+    url: "hr_services.php",
+    type: "POST",
+    data:  data,
+    dataType: 'json',
+    success: function(result){
+      if(result.infocode == "ADVANCEAVAILABLE"){
+          $('#advance').val(result.advance_amount);
       }
     },
     error: function(){}
@@ -451,9 +473,9 @@ function saveSalary(){
     dataType: 'json',
     success: function(result){
       if(result.infocode == "SAVESALARYSUCCESS"){
-          bootbox.alert(result.message);
-          gEmployee = {};
-          gSalaryInfo = {};
+          bootbox.alert(result.message, function(){
+            location.reload();
+          });
       }else{
           bootbox.alert(result.message);
       }

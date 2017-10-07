@@ -45,6 +45,9 @@
     case 'add_advance':
         $finaloutput = addAdvance();
     break;
+    case 'get_advance_details':
+        $finaloutput = getAdvanceDetails();
+    break;
     default:
           $finaloutput = array("infocode" => "INVALIDACTION", "message" => "Irrelevant action");
   }
@@ -263,9 +266,32 @@
     $salary_date = date("Y-m-d");
 
     $saveSalaryQuery = "INSERT INTO hr_salary_process (emp_id, payment_mode, bank_acc_num, bank_name, bank_ifsc, salary_date, basic_monthly, hra, special_allowance, vm, advance, pf, esi, professional_tax, od, tds, employer_pf, employer_esi, working_days, lop, lop_amount, earnings_per_day, total_earnings, total_deductions, net_pay) VALUES ('$empId', '$paymentMode', '$bankAccNumber', '$bankName', '$bankIfsc', '$salary_date', '$basic_monthly', '$hra', '$special_allowance', '$vm', '$advance', '$pf', '$esi', '$professional_tax', '$od', '$tds', '$employer_pf', '$employer_esi', '$working_days', '$lop', '$lop_amount', '$earnings_per_day', '$total_earnings', '$total_deductions', '$net_pay')";
-    mysqli_query($dbc, $saveSalaryQuery);
-    $output = array("infocode" => "SAVESALARYSUCCESS", "message" => "Salary information saved successfuly.");
+    if(mysqli_query($dbc, $saveSalaryQuery)){
+      if($advance > 0){
+        updateAdvanceAmount($empId, $advance);
+      }
+      $output = array("infocode" => "SAVESALARYSUCCESS", "message" => "Salary information saved successfuly.");
+    } else {
+      $output = array("infocode" => "SAVESALARYFAILURE", "message" => "Salary information not saved.");
+    }
     return $output;
+  }
+
+  function updateAdvanceAmount($empId, $advance){
+    global $dbc;
+    $empMasterId = getEmpMasterId($empId);
+    $prevAdvanceAmount = getPrevAdvanceAmount($empMasterId);
+    $currentAdvanceAmount = $prevAdvanceAmount - $advance;
+    $query = "UPDATE hr_employee_advance SET advance_amount='$currentAdvanceAmount' WHERE emp_master_id='$empMasterId'";
+    mysqli_query($dbc, $query);
+  }
+
+  function getEmpMasterId($empId){
+    global $dbc;
+    $query = "SELECT hr_emp_master_id FROM hr_employee_master WHERE emp_id='$empId'";
+    $result = mysqli_query($dbc, $query);
+    $row = mysqli_fetch_assoc($result);
+    return $row['hr_emp_master_id'];
   }
 
   function getSalaryList(){
@@ -303,7 +329,80 @@
 
   function addAdvance(){
     global $dbc;
-    $advanceDate = date('Y-m-d', strtotime(mysqli_real_escape_string($dbc,trim($_POST['advance_date']))));
+    $advanceData = array();
+    $advanceData['advance_date'] = date('Y-m-d', strtotime(mysqli_real_escape_string($dbc,trim($_POST['advance_date']))));
+    $advanceData['emp_master_id'] = mysqli_real_escape_string($dbc,trim($_POST['emp_master_id_val']));
+    $advanceData['advance_amount'] = mysqli_real_escape_string($dbc,trim($_POST['advance_amount']));
+    $advanceData['payment_mode'] = mysqli_real_escape_string($dbc,trim($_POST['payment_mode']));
+    $advanceData['bank_acc_number'] = mysqli_real_escape_string($dbc,trim($_POST['bank_acc_number']));
+    $advanceData['bank_name'] = mysqli_real_escape_string($dbc,trim($_POST['bank_name']));
+    $advanceData['bank_ifsc'] = mysqli_real_escape_string($dbc,trim($_POST['ifsc']));
+    if(checkIfAdvanceRecordExists($advanceData['emp_master_id'])){
+      //update the amount value to the same record
+      return updateAdvanceRecord($advanceData);
+    } else {
+      //add a new record
+      return addAdvanceRecord($advanceData);
+    }
   }
+
+  function addAdvanceRecord($advanceData){
+    global $dbc;
+    $query = "INSERT INTO hr_employee_advance (emp_master_id, advance_date, advance_amount, payment_mode, bank_acc_num, bank_name, bank_ifsc) VALUES ('".$advanceData['emp_master_id']."', '".$advanceData['advance_date']."', '".$advanceData['advance_amount']."', '".$advanceData['payment_mode']."', '".$advanceData['bank_acc_number']."', '".$advanceData['bank_name']."', '".$advanceData['bank_ifsc']."')";
+    if(mysqli_query($dbc, $query)){
+      return array('infocode' => 'ADVANCEDATAADDED', 'message' => 'Advance entry added successfuly.');
+    } else {
+      return array('infocode' => 'ADVANCEDATANOTADDED', 'message' => 'Advance entry not added.');
+    }
+  }
+
+  function updateAdvanceRecord($advanceData){
+    global $dbc;
+    $prevAdvanceAmount = getPrevAdvanceAmount($advanceData['emp_master_id']);
+    $advanceData['advance_amount'] = $prevAdvanceAmount + $advanceData['advance_amount'];
+    $query = "UPDATE hr_employee_advance SET advance_date='".$advanceData['advance_date']."', advance_amount='".$advanceData['advance_amount']."', payment_mode='".$advanceData['payment_mode']."', bank_acc_num='".$advanceData['bank_acc_number']."', bank_name='".$advanceData['bank_name']."', bank_ifsc='".$advanceData['bank_ifsc']."' WHERE emp_master_id='".$advanceData['emp_master_id']."'";
+    if(mysqli_query($dbc, $query)){
+      return array('infocode' => 'ADVANCEDATAADDED', 'message' => 'Advance entry added successfuly.');
+    } else {
+      return array('infocode' => 'ADVANCEDATANOTADDED', 'message' => 'Advance entry not added.');
+    }
+  }
+
+  function getPrevAdvanceAmount($empMasterId){
+    global $dbc; 
+    $query = "SELECT advance_amount FROM hr_employee_advance WHERE emp_master_id='$empMasterId'";
+    $result = mysqli_query($dbc, $query);
+    $row = mysqli_fetch_assoc($result);
+    return $row['advance_amount'];
+  }
+
+  function checkIfAdvanceRecordExists($empMasterId){
+    global $dbc;
+    $query = "SELECT * FROM hr_employee_advance WHERE emp_master_id='$empMasterId'";
+    $result = mysqli_query($dbc, $query);
+    if(mysqli_num_rows($result) > 0){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function getAdvanceDetails(){
+      global $dbc;
+      $empId = mysqli_real_escape_string($dbc,trim($_POST['emp_id']));
+      $query = "SELECT adv.advance_amount FROM hr_employee_advance adv, hr_employee_master emst WHERE emst.emp_id='$empId' AND emst.hr_emp_master_id=adv.emp_master_id";
+      //file_put_contents("hr.log", "\n".print_r($query, true), FILE_APPEND | LOCK_EX);
+      $result = mysqli_query($dbc, $query);
+      if(mysqli_num_rows($result) > 0){
+        $row = mysqli_fetch_assoc($result);
+        if($row['advance_amount'] > 0){
+          return array('infocode' => 'ADVANCEAVAILABLE', 'advance_amount' => $row['advance_amount']);
+        } else {
+          return array('infocode' => 'ADVANCEAVAILABLE', 'advance_amount' => '0');
+        }
+      } else {
+        return array('infocode' => 'ADVANCEAVAILABLE', 'advance_amount' => '0');
+      }
+    }
 
 ?>
