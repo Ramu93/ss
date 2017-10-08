@@ -157,14 +157,29 @@
     for($index = 0; $index < count($employeeList); $index++){
       if($employeeList[$index]->isEmployeeSelected == 'true'){
         $empID = $employeeList[$index]->emp_id;
-        $empAttendanceQuery = "INSERT INTO hr_attendance (emp_id, attendance_date, department, office, location, present_absent, entry_time, exit_time, late_by, reason, informed_uninformed) VALUES ('$empID', '$attendanceDate', '$department', '$office', '$location', '$presentAbsent[$index]', '$entryTime[$index]', '$exitTime[$index]', '$lateBy[$index]','$reason[$index]', '$informedUninformed[$index]')";  
-        mysqli_query($dbc, $empAttendanceQuery);
+        if(!checkIfAttendanceAlreadyExists($empID, $attendanceDate)){
+          $empAttendanceQuery = "INSERT INTO hr_attendance (emp_id, attendance_date, department, office, location, present_absent, entry_time, exit_time, late_by, reason, informed_uninformed) VALUES ('$empID', '$attendanceDate', '$department', '$office', '$location', '$presentAbsent[$index]', '$entryTime[$index]', '$exitTime[$index]', '$lateBy[$index]','$reason[$index]', '$informedUninformed[$index]')";  
+          mysqli_query($dbc, $empAttendanceQuery);
+        } else {
+          return $output = array("infocode" => "ATTENDANCEUPDATEFAILURE", "message" => "Attendance already entered for employee with ID: " . $empID);
+        }
       }
     }
     // file_put_contents("hr.log", "\n".print_r($employeeList, true), FILE_APPEND | LOCK_EX);
     $output = array("infocode" => "ATTENDANCEUPDATESUCCESS", "message" => "Attendance updated successfuly.");
 
     return $output;
+  }
+
+  function checkIfAttendanceAlreadyExists($empId, $attendanceDate){
+    global $dbc;
+    $query = "SELECT * FROM hr_attendance WHERE emp_id='$empId' AND attendance_date='$attendanceDate'";
+    $result = mysqli_query($dbc, $query);
+    if(mysqli_num_rows($result) > 0){
+      return true;
+    } else {
+      return false;
+    }
   }
 
   function viewAttendance(){
