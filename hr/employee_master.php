@@ -10,6 +10,10 @@ include('..'.DIRECTORY_SEPARATOR.'header.php');
 include('..'.DIRECTORY_SEPARATOR.'topbar.php');
 include('..'.DIRECTORY_SEPARATOR.'sidebar.php');
 
+include 'department-config.php';
+include 'office-config.php';
+include 'location-config.php';
+
 ?>
 
 <!--main-container-part-->
@@ -67,8 +71,11 @@ include('..'.DIRECTORY_SEPARATOR.'sidebar.php');
           <div class="controls">
                <select class="form-control required" name="office" id="office">
                  <option value="" selected="selected">Select office...</option>
-                 <option value="SBBS">SBBS</option>
-                 <option value="SBBM">SBBM</option>
+                 <?php 
+                    foreach($office as $key => $value){
+                      echo '<option value="'.$key.'">'.$value.'</option>';
+                    }
+                 ?>
                </select>
           </div>
         </div>
@@ -77,9 +84,11 @@ include('..'.DIRECTORY_SEPARATOR.'sidebar.php');
           <div class="controls">
                <select class="form-control required" name="location" id="location">
                  <option value="" selected="selected">Select location...</option>
-                 <option value="T. Nagar">T. Nagar</option>
-                 <option value="Banglore">Banglore</option>
-                 <option value="Poonamallee">Poonamallee</option>
+                 <?php 
+                    foreach($location as $key => $value){
+                      echo '<option value="'.$key.'">'.$value.'</option>';
+                    }
+                 ?>
                </select>
           </div>
         </div>
@@ -94,15 +103,11 @@ include('..'.DIRECTORY_SEPARATOR.'sidebar.php');
           <div class="controls">
            <select class="form-control required" name="department" id="department">
              <option value="" selected="selected">Select department...</option>
-             <option value="HR">HR</option>
-             <option value="Marketing">Marketing</option>
-             <option value="Finance">Finance</option>
-             <option value="Service">Service</option>
-             <option value="Client Accountant">Client Accountant</option>
-             <option value="Admin">Admin</option>
-             <option value="Despatch">Despatch</option>
-             <option value="Materials">Materials</option>
-             <option value="Tech">Tech</option>
+             <?php 
+                foreach($department as $key => $value){
+                  echo '<option value="'.$key.'">'.$value.'</option>';
+                }
+             ?>
            </select>
           </div>
         </div>

@@ -10,6 +10,10 @@ include('..'.DIRECTORY_SEPARATOR.'header.php');
 include('..'.DIRECTORY_SEPARATOR.'topbar.php');
 include('..'.DIRECTORY_SEPARATOR.'sidebar.php');
 
+include 'department-config.php';
+include 'office-config.php';
+include 'location-config.php';
+
 $empID = isset($_GET['emp_id'])?$_GET['emp_id']:0;
 
 $query = "SELECT * FROM hr_employee_master WHERE emp_id='$empID'";
@@ -82,9 +86,16 @@ if(mysqli_num_rows($result)>0){
           <label class="control-label">Office/Entity:</label>
           <div class="controls">
                <select class="form-control required" name="office" id="office">
-                 <option value="" selected="selected">Select office...</option>
-                 <option value="SBBS" <?php echo ('SBBS'==$out['office'])?'selected="selected"':''; ?> >SBBS</option>
-                 <option value="SBBM" <?php echo ('SBBM'==$out['office'])?'selected="selected"':''; ?> >SBBM</option>
+                 <option value="">Select office...</option>
+                 <?php 
+                    foreach($office as $key => $value){
+                      if($key == $out['office']){
+                        echo '<option selected="selected" value="'.$key.'">'.$value.'</option>';
+                      } else {
+                        echo '<option value="'.$key.'">'.$value.'</option>';
+                      }
+                    }
+                 ?>
                </select>
           </div>
         </div>
@@ -92,10 +103,16 @@ if(mysqli_num_rows($result)>0){
           <label class="control-label">Location:</label>
           <div class="controls">
                <select class="form-control required" name="location" id="location">
-                 <option value="" selected="selected">Select location...</option>
-                 <option value="T. Nagar" <?php echo ('T. Nagar'==$out['location'])?'selected="selected"':''; ?> >T. Nagar</option>
-                 <option value="Banglore" <?php echo ('Banglore'==$out['location'])?'selected="selected"':''; ?> >Banglore</option>
-                 <option value="Poonamallee" <?php echo ('Poonamallee'==$out['location'])?'selected="selected"':''; ?>>Poonamallee</option>
+                 <option value="" >Select location...</option>
+                 <?php 
+                    foreach($location as $key => $value){
+                      if($key == $out['location']){
+                        echo '<option selected="selected" value="'.$key.'">'.$value.'</option>';
+                      } else {
+                        echo '<option value="'.$key.'">'.$value.'</option>';
+                      }
+                    }
+                 ?>
                </select>
           </div>
         </div>
@@ -109,16 +126,16 @@ if(mysqli_num_rows($result)>0){
           <label class="control-label">Department:</label>
           <div class="controls">
                <select class="form-control required" name="department" id="department">
-                 <option value="" selected="selected">Select department...</option>
-                 <option value="HR" <?php echo ('HR'==$out['department'])?'selected="selected"':''; ?> >HR</option>
-                 <option value="Marketing" <?php echo ('Marketing'==$out['department'])?'selected="selected"':''; ?> >Marketing</option>
-                 <option value="Finance" <?php echo ('Finance'==$out['department'])?'selected="selected"':''; ?> >Finance</option>
-                 <option value="Service" <?php echo ('Service'==$out['department'])?'selected="selected"':''; ?> >Service</option>
-                 <option value="Client Accountant" <?php echo ('Client Accountant'==$out['department'])?'selected="selected"':''; ?> >Client Accountant</option>
-                 <option value="Admin" <?php echo ('Admin'==$out['department'])?'selected="selected"':''; ?> >Admin</option>
-                 <option value="Despatch" <?php echo ('Despatch'==$out['department'])?'selected="selected"':''; ?> >Despatch</option>
-                 <option value="Materials" <?php echo ('Materials'==$out['department'])?'selected="selected"':''; ?> >Materials</option>
-                 <option value="Tech" <?php echo ('Tech'==$out['department'])?'selected="selected"':''; ?> >Tech</option>
+                 <option value="">Select department...</option>
+                 <?php 
+                    foreach($department as $key => $value){
+                      if($key == $out['department']){
+                        echo '<option selected="selected" value="'.$key.'">'.$value.'</option>';
+                      } else {
+                        echo '<option value="'.$key.'">'.$value.'</option>';
+                      }
+                    }
+                 ?>
                </select>
           </div>
         </div>
