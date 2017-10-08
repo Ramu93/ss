@@ -284,6 +284,7 @@
     $currentAdvanceAmount = $prevAdvanceAmount - $advance;
     $query = "UPDATE hr_employee_advance SET advance_amount='$currentAdvanceAmount' WHERE emp_master_id='$empMasterId'";
     mysqli_query($dbc, $query);
+    addAdvanceLog($empMasterId, $advance, 'deduction');
   }
 
   function getEmpMasterId($empId){
@@ -327,6 +328,12 @@
     return $output;
   }
 
+  function addAdvanceLog($empMasterId, $amount, $process){
+    global $dbc;
+    $query = "INSERT INTO hr_employee_advance_log (emp_master_id, advance_amount, process) VALUES ('$empMasterId', '$amount', '$process')";
+    mysqli_query($dbc, $query);
+  }
+
   function addAdvance(){
     global $dbc;
     $advanceData = array();
@@ -337,6 +344,7 @@
     $advanceData['bank_acc_number'] = mysqli_real_escape_string($dbc,trim($_POST['bank_acc_number']));
     $advanceData['bank_name'] = mysqli_real_escape_string($dbc,trim($_POST['bank_name']));
     $advanceData['bank_ifsc'] = mysqli_real_escape_string($dbc,trim($_POST['ifsc']));
+    addAdvanceLog($advanceData['emp_master_id'], $advanceData['advance_amount'], 'provided');
     if(checkIfAdvanceRecordExists($advanceData['emp_master_id'])){
       //update the amount value to the same record
       return updateAdvanceRecord($advanceData);
