@@ -230,7 +230,11 @@
     $exitTime = mysqli_real_escape_string($dbc,trim($_POST['exit_time']));
     $lateBy = mysqli_real_escape_string($dbc,trim($_POST['late_by']));
     $reason = mysqli_real_escape_string($dbc,trim($_POST['reason']));
-    $informedUninformed = mysqli_real_escape_string($dbc,trim($_POST['informed_uninformed_val']));
+    if(isset($_POST['informed_uninformed_val'])){
+      $informedUninformed = mysqli_real_escape_string($dbc,trim($_POST['informed_uninformed_val']));
+    } else {
+      $informedUninformed = '';
+    }
 
     $updateAttendanceDetailQuery = "UPDATE hr_attendance SET present_absent='$presentAbsent', entry_time='$entryTime', exit_time='$exitTime', late_by='$lateBy', reason='$reason', informed_uninformed='$informedUninformed' WHERE hr_attendance_id='$attendanceID'";
     mysqli_query($dbc, $updateAttendanceDetailQuery);

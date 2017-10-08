@@ -10,6 +10,10 @@ include('..'.DIRECTORY_SEPARATOR.'header.php');
 include('..'.DIRECTORY_SEPARATOR.'topbar.php');
 include('..'.DIRECTORY_SEPARATOR.'sidebar.php');
 
+include 'department-config.php';
+include 'office-config.php';
+include 'location-config.php';
+
 ?>
 
 <!--main-container-part-->
@@ -37,15 +41,11 @@ include('..'.DIRECTORY_SEPARATOR.'sidebar.php');
           <div class="controls">
            <select class="form-control required" name="department" id="department">
              <option value="" selected="selected">Select department...</option>
-             <option value="HR">HR</option>
-             <option value="Marketing">Marketing</option>
-             <option value="Finance">Finance</option>
-             <option value="Service">Service</option>
-             <option value="Client Accountant">Client Accountant</option>
-             <option value="Admin">Admin</option>
-             <option value="Despatch">Despatch</option>
-             <option value="Materials">Materials</option>
-             <option value="Tech">Tech</option>
+             <?php 
+                foreach($department as $key => $value){
+                  echo '<option value="'.$key.'">'.$value.'</option>';
+                }
+             ?>
            </select>
           </div>
         </div>
@@ -54,8 +54,11 @@ include('..'.DIRECTORY_SEPARATOR.'sidebar.php');
           <div class="controls">
                <select class="form-control required" name="office" id="office">
                  <option value="" selected="selected">Select office...</option>
-                 <option value="SBBS">SBBS</option>
-                 <option value="SBBM">SBBM</option>
+                 <?php 
+                    foreach($office as $key => $value){
+                      echo '<option value="'.$key.'">'.$value.'</option>';
+                    }
+                 ?>
                </select>
           </div>
         </div>
@@ -64,9 +67,11 @@ include('..'.DIRECTORY_SEPARATOR.'sidebar.php');
           <div class="controls">
                <select class="form-control required" name="location" id="location">
                  <option value="" selected="selected">Select location...</option>
-                 <option value="T. Nagar">T. Nagar</option>
-                 <option value="Banglore">Banglore</option>
-                 <option value="Poonamallee">Poonamallee</option>
+                 <?php 
+                    foreach($location as $key => $value){
+                      echo '<option value="'.$key.'">'.$value.'</option>';
+                    }
+                 ?>
                </select>
           </div>
         </div>
@@ -153,6 +158,7 @@ include('..'.DIRECTORY_SEPARATOR.'sidebar.php');
 </div>
 <!-- edit attendance details modal ends -->
 
+<script src="../js/moment.min.js"></script>
 
 <?php include('..'.DIRECTORY_SEPARATOR.'footer_js.php'); ?>
 <script type="text/javascript">
@@ -170,9 +176,11 @@ $(document).ready(function(){
 
     $('#date').val(getCurrentDate());
 
+    var maximumDate = new Date();
     $('#date').datepicker({
         format: 'dd-mm-yyyy',
-        autoclose: true
+        autoclose: true,
+        endDate: maximumDate
     });
 
     $('.entry_time_class').val('09:30 AM');
@@ -260,9 +268,9 @@ function displayEmployeeTable(employeeData){
       output += '<td>';
         output += '<div id="present_fields_'+count+'" class="present_absent_fields present_fields">';
           output += '<label id="entry_time_lbl_'+count+'">Entry Time:</label>';
-          output += '<input type="text" value="09:30 AM" class="form-control entry_time_class" name="entry_time[]" id="entry_time_'+count+'" /><br/>';
+          output += '<input type="text" value="09:30 AM" onfocusout="computeLateTime(this.id);" class="form-control entry_time_class time_class" name="entry_time[]" id="entry_time_'+count+'" /><br/>';
           output += '<label id="exit_time_lbl_'+count+'">Exit Time:</label>';
-          output += '<input type="text" value="06:00 PM" class="exit_time_class" name="exit_time[]" id="exit_time_'+count+'"  /><br/>';
+          output += '<input type="text" value="06:00 PM" class="time_class exit_time_class" name="exit_time[]" id="exit_time_'+count+'"  /><br/>';
           output += '<label id="late_by_lbl_'+count+'">Late By:</label>';
           output += '<input type="text" name="late_by[]" id="late_by_'+count+'" readonly /><br/>';
         output += '</div>';
@@ -317,8 +325,8 @@ function bindEmployeeListEvents(){
       $('#present_fields_'+idCountVal).hide();
       $('#absent_fields_'+idCountVal).show();
     }
-    $('#entry_time_'+ idCountVal).val('');
-    $('#exit_time_'+ idCountVal).val('');
+    $('#entry_time_'+ idCountVal).val('09:30 AM');
+    $('#exit_time_'+ idCountVal).val('06:00 PM');
     $('#late_by_'+ idCountVal).val('');
     $('#reason_'+ idCountVal).val('');
     $('#informed_uninformed_val_'+ idCountVal).val('');
@@ -331,6 +339,67 @@ function bindEmployeeListEvents(){
     var idCountVal = presentAbsentCheckBoxIDArray[presentAbsentCheckBoxIDArray.length-1];
     $('#informed_uninformed_val_' + idCountVal).val($(this).val());
   });
+
+  
+
+
+  $('#time_class').on('change', function(){
+    var presentAbsentCheckBoxID = $(this).attr("id");
+    var presentAbsentCheckBoxVal = $('#'+presentAbsentCheckBoxID).val();
+    var presentAbsentCheckBoxIDArray = presentAbsentCheckBoxID.split('_'); 
+    var idCountVal = presentAbsentCheckBoxIDArray[presentAbsentCheckBoxIDArray.length-1];
+    var defaultEntryTime = new Date();
+    var entryTime = new Date($('#entry_time_'+idCountVal).val());
+    var lateTime = 
+    alert(lateTime.getHours());
+  });
+}
+
+function computeLateTime(id){
+  var defaultEntryTime = new Date();
+  var defaultEntryTimeStr = "09:30 AM";
+  var parts = defaultEntryTimeStr.match(/(\d+)\:(\d+) (\w+)/);
+  var hours = /am/i.test(parts[3]) ? parseInt(parts[1], 10) : parseInt(parts[1], 10) + 12;
+  var minutes = parseInt(parts[2], 10);
+  defaultEntryTime.setHours(hours);
+  defaultEntryTime.setMinutes(minutes);
+
+  var entryTime = new Date();
+  var entryTimeStr = $('#' + id).val();
+  var partsT = entryTimeStr.match(/(\d+)\:(\d+) (\w+)/);
+  var hoursT = /am/i.test(partsT[3]) ? parseInt(partsT[1], 10) : parseInt(partsT[1], 10) + 12;
+  var minutesT = parseInt(partsT[2], 10);
+  entryTime.setHours(hoursT);
+  entryTime.setMinutes(minutesT);
+
+  defaultEntryTime = moment(defaultEntryTime).format('DD/MM/YYYY HH:mm:ss');
+  entryTime = moment(entryTime).format('DD/MM/YYYY HH:mm:ss'); 
+  var lateTime = moment.utc(moment(entryTime,"DD/MM/YYYY HH:mm:ss").diff(moment(defaultEntryTime,"DD/MM/YYYY HH:mm:ss"))).format("HH:mm:ss");
+  var idArray = id.split('_'); 
+  var lateByIdCount = idArray[idArray.length-1];
+  $('#late_by_' + lateByIdCount).val(lateTime);
+}
+
+function computeLateTimeForEdit(){
+  var defaultEntryTime = new Date();
+  var defaultEntryTimeStr = "09:30 AM";
+  var parts = defaultEntryTimeStr.match(/(\d+)\:(\d+) (\w+)/);
+  var hours = /am/i.test(parts[3]) ? parseInt(parts[1], 10) : parseInt(parts[1], 10) + 12;
+  var minutes = parseInt(parts[2], 10);
+  defaultEntryTime.setHours(hours);
+  defaultEntryTime.setMinutes(minutes);
+
+  var entryTime = new Date();
+  var entryTimeStr = $('#entry_time').val();
+  var partsT = entryTimeStr.match(/(\d+)\:(\d+) (\w+)/);
+  var hoursT = /am/i.test(partsT[3]) ? parseInt(partsT[1], 10) : parseInt(partsT[1], 10) + 12;
+  var minutesT = parseInt(partsT[2], 10);
+  entryTime.setHours(hoursT);
+  entryTime.setMinutes(minutesT);
+  defaultEntryTime = moment(defaultEntryTime).format('DD/MM/YYYY HH:mm:ss');
+  entryTime = moment(entryTime).format('DD/MM/YYYY HH:mm:ss');
+  var lateTime = moment.utc(moment(entryTime,"DD/MM/YYYY HH:mm:ss").diff(moment(defaultEntryTime,"DD/MM/YYYY HH:mm:ss"))).format("HH:mm:ss");
+  $('#late_by').val(lateTime);
 }
 
 function setDefaultEmployeeSelectValueFalse(){
@@ -343,7 +412,7 @@ function setDefaultEmployeeSelectValueFalse(){
 function saveAttendance(){
   var data = $('#attendance_form').serialize() + "&" + $('#employee_attendance_form').serialize() + "&employee_list=" + JSON.stringify(gEmployeeList) + '&action=save_attendance';
 
-  console.log(data);
+  // console.log(data);
 
   $.ajax({
     url: "hr_services.php",
@@ -456,8 +525,10 @@ function displayAttendanceDetail(attendanceDetail){
     output += '<label>'+ attendanceDetail.entry_time +'</label>';
     output += '<label>Exit Time:</label>';
     output += '<label>'+ attendanceDetail.exit_time +'</label>';
-    output += '<label>Late By:</label>';
-    output += '<label>'+ attendanceDetail.late_by +'</label>';
+    if(attendanceDetail.late_by != null){
+      output += '<label>Late By:</label>';
+      output += '<label>'+ attendanceDetail.late_by +'</label>';
+    }
   } else {
     output += '<label>Reason:</label>';
     output += '<label>'+ attendanceDetail.reason +'</label>';
@@ -498,11 +569,15 @@ function displayEditAttendanceDetailFields(attendanceDetail){
   output += '</select>';
   output += '<div id="present_fields_edit" class="present_absent_fields_edit">';
     output += '<label id="entry_time_lbl">Entry Time:</label>';
-    output += '<input type="text" name="entry_time" id="entry_time" value="'+attendanceDetail.entry_time+'" /><br/>';
+    output += '<input type="text" name="entry_time" id="entry_time" onfocusout="computeLateTimeForEdit();" value="'+attendanceDetail.entry_time+'" /><br/>';
     output += '<label id="exit_time_lbl">Exit Time:</label>';
     output += '<input type="text" name="exit_time" id="exit_time" value="'+attendanceDetail.exit_time+'" /><br/>';
     output += '<label id="late_by_lbl">Late By:</label>';
-    output += '<input type="text" name="late_by" id="late_by" readonly value="'+attendanceDetail.late_by+'" /><br/>';
+    if(attendanceDetail.late_by != null){
+      output += '<input type="text" name="late_by" id="late_by" readonly value="'+attendanceDetail.late_by+'" /><br/>';
+    } else {
+      output += '<input type="text" name="late_by" id="late_by" readonly value="" /><br/>';
+    } 
   output += '</div>';
   output += '<div id="absent_fields_edit" class="present_absent_fields_edit">';
     output += '<label id="reason_lbl">Reason:</label>';
