@@ -61,19 +61,19 @@ include 'location-config.php';
           <div class="controls">
              <select class="form-control required" name="blood_group" id="blood_group">
                 <option value="">Select blood group...</option>
-                <option>A +ve</option>
-                <option>A -ve</option>
-                <option>A Unknown</option>
-                <option>B +ve</option>
-                <option>B -ve</option>
-                <option>B Unknown</option>
-                <option>AB +ve</option>
-                <option>AB -ve</option>
-                <option>AB Unknown</option>
-                <option>O +ve</option>
-                <option>O -ve</option>
-                <option>O Unknown</option>
-                <option>Unknown</option>
+                <option value="A +ve">A +ve</option>
+                <option value="A -ve">A -ve</option>
+                <option value="A Unknown">A Unknown</option>
+                <option value="B +ve">B +ve</option>
+                <option value="B -ve">B -ve</option>
+                <option value="B Unknown">B Unknown</option>
+                <option value="AB +ve">AB +ve</option>
+                <option value="AB -ve">AB -ve</option>
+                <option value="AB Unknown">AB Unknown</option>
+                <option value="O +ve">O +ve</option>
+                <option value="O -ve">O -ve</option>
+                <option value="O Unknown">O Unknown</option>
+                <option value="Unknown">Unknown</option>
              </select>
           </div>
         </div>
@@ -472,6 +472,9 @@ function addEmployeeDetails(){
             if(result.infocode == "EMPLOYEEADDED"){
                 bootbox.alert(result.message);
                 $('#addemployee_form')[0].reset();
+                g_academicDetails = [];
+                g_familyDetails = [];
+                g_employmentDetails = [];
             }else{
                 bootbox.alert(result.message);
             }
