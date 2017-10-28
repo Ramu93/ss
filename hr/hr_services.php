@@ -118,8 +118,19 @@
     $bankAccNumber = mysqli_real_escape_string($dbc,trim($_POST['bank_acc_number']));
     $bankName = mysqli_real_escape_string($dbc,trim($_POST['bank_name']));
     $bankIfsc = mysqli_real_escape_string($dbc,trim($_POST['ifsc']));
+    $gender = mysqli_real_escape_string($dbc,trim($_POST['gender']));
+    $bloodGroup = mysqli_real_escape_string($dbc,trim($_POST['blood_group']));
+    $maritalStatus = mysqli_real_escape_string($dbc,trim($_POST['marital_status']));
+    $husbandFatherName = mysqli_real_escape_string($dbc,trim($_POST['name_father_husband']));
+    $permanentAddress = mysqli_real_escape_string($dbc, trim($_POST['permanent_address']));
+    $mobileNumber = mysqli_real_escape_string($dbc, trim($_POST['mobile_number']));
+    $email = mysqli_real_escape_string($dbc, trim($_POST['email']));
+    $emergencyContactNumber = mysqli_real_escape_string($dbc, trim($_POST['emergency_contact_number']));
+    $academicDetailsJson = $_POST['academic_details'];
+    $familyDetailsJson = $_POST['family_details'];
+    $employmentDetailsJson = $_POST['employment_details'];
 
-    $updateEmpoyeeQuery = "UPDATE hr_employee_master SET employee_name='$employeeName', dob='$dob', communication_address='$communicationAddress', pan_details='$panDetails', aadhar_details='$aadharDetails', office='$office', location='$location', designation='$designation', payment_mode='$paymentMode', ctc_monthly='$ctcMonthly', doj='$doj', qualification='$qualification', experience='$experience', department='$department', bank_acc_num='$bankAccNumber', bank_name='$bankName', bank_ifsc='$bankIfsc' WHERE emp_id='$empID'";
+    $updateEmpoyeeQuery = "UPDATE hr_employee_master SET employee_name='$employeeName', dob='$dob', communication_address='$communicationAddress', pan_details='$panDetails', aadhar_details='$aadharDetails', office='$office', location='$location', designation='$designation', payment_mode='$paymentMode', ctc_monthly='$ctcMonthly', doj='$doj', qualification='$qualification', experience='$experience', department='$department', bank_acc_num='$bankAccNumber', bank_name='$bankName', bank_ifsc='$bankIfsc', gender='$gender', blood_group='$bloodGroup', marital_status='$maritalStatus', husband_father_name='$husbandFatherName', permanent_address='$permanentAddress', mobile_number='$mobileNumber', email='$email', emergency_contact_no='$emergencyContactNumber', academic_details='$academicDetailsJson', family_details='$familyDetailsJson', employment_details='$employmentDetailsJson' WHERE emp_id='$empID'";
 
     if(mysqli_query($dbc, $updateEmpoyeeQuery)){
       $output = array("infocode" => "EMPLOYEEUPDATED", "message" => "Employee updated succesfully.");
