@@ -438,6 +438,11 @@ $(document).ready(function(){
         autoclose: true,
         maxDate: 'now'
     });
+    $('.dob').datepicker({
+        format: 'dd-mm-yyyy',
+        autoclose: true,
+        maxDate: 'now'
+    });
 
     $('#bank_details_div').hide();
     $('#payment_mode').on('change', function(){

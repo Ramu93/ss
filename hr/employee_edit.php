@@ -422,7 +422,11 @@ $(document).ready(function(){
         format: 'dd-mm-yyyy',
         autoclose: true
     });
-    
+    $('.dob').datepicker({
+        format: 'dd-mm-yyyy',
+        autoclose: true,
+        maxDate: 'now'
+    });
     <?php if($out['payment_mode'] != 'Bank'){ ?>
     $('#bank_details_div').hide();
     <?php } ?>
