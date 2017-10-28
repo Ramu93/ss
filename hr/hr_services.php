@@ -74,8 +74,20 @@
     $bankAccNumber = mysqli_real_escape_string($dbc,trim($_POST['bank_acc_number']));
     $bankName = mysqli_real_escape_string($dbc,trim($_POST['bank_name']));
     $bankIfsc = mysqli_real_escape_string($dbc,trim($_POST['ifsc']));
+    $gender = mysqli_real_escape_string($dbc,trim($_POST['gender']));
+    $bloodGroup = mysqli_real_escape_string($dbc,trim($_POST['blood_group']));
+    $maritalStatus = mysqli_real_escape_string($dbc,trim($_POST['marital_status']));
+    $husbandFatherName = mysqli_real_escape_string($dbc,trim($_POST['name_father_husband']));
+    $permanentAddress = mysqli_real_escape_string($dbc, trim($_POST['permanent_address']));
+    $mobileNumber = mysqli_real_escape_string($dbc, trim($_POST['mobile_number']));
+    $email = mysqli_real_escape_string($dbc, trim($_POST['email']));
+    $emergencyContactNumber = mysqli_real_escape_string($dbc, trim($_POST['emergency_contact_number']));
+    $academicDetailsJson = $_POST['academic_details'];
+    $familyDetailsJson = $_POST['family_details'];
+    $employmentDetailsJson = $_POST['employment_details'];
 
-    $addEmployeeQuery = "INSERT INTO hr_employee_master (employee_name, dob, communication_address, pan_details, aadhar_details, emp_id, office, location, designation, payment_mode, bank_acc_num, bank_name, bank_ifsc, ctc_monthly, doj, qualification, experience, department) VALUES ('$employeeName','$dob', '$communicationAddress', '$panDetails', '$aadharDetails', '$empID', '$office', '$location', '$designation', '$paymentMode', '$bankAccNumber', '$bankName', '$bankIfsc', '$ctcMonthly', '$doj', '$qualification', '$experience', '$department')";
+
+    $addEmployeeQuery = "INSERT INTO hr_employee_master (employee_name, dob, communication_address, pan_details, aadhar_details, emp_id, office, location, designation, payment_mode, bank_acc_num, bank_name, bank_ifsc, ctc_monthly, doj, qualification, experience, department, academic_details, family_details, employment_details, gender, blood_group, marital_status, mobile_number, email, emergency_contact_no, permanent_address, husband_father_name) VALUES ('$employeeName','$dob', '$communicationAddress', '$panDetails', '$aadharDetails', '$empID', '$office', '$location', '$designation', '$paymentMode', '$bankAccNumber', '$bankName', '$bankIfsc', '$ctcMonthly', '$doj', '$qualification', '$experience', '$department', '$academicDetailsJson', '$familyDetailsJson', '$employmentDetailsJson', '$gender', '$bloodGroup', '$maritalStatus', '$mobileNumber', '$email', '$emergencyContactNumber', '$permanentAddress', '$husbandFatherName')";
 
   	if(mysqli_query($dbc, $addEmployeeQuery)){
   		$output = array("infocode" => "EMPLOYEEADDED", "message" => "Employee added succesfully.");

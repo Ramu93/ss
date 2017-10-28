@@ -459,9 +459,10 @@ $(window).bind("load", function() {
 function addEmployeeDetails(){
   makeEducationDetailsJSON();
   makeFamilyDetailsJSON();
+  makeEmploymentDetailsJSON();
 
   if($('#addemployee_form').valid()){ 
-    var data = $('#addemployee_form').serialize() + '&action=add_employee';
+    var data = $('#addemployee_form').serialize() + '&academic_details=' + JSON.stringify(g_academicDetails) + '&family_details=' + JSON.stringify(g_familyDetails) + '&employment_details=' + JSON.stringify(g_employmentDetails) + '&action=add_employee';
     $.ajax({
         url: "hr_services.php",
         type: "POST",
