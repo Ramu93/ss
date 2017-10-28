@@ -560,7 +560,7 @@ var g_familyDetails = [];
 function makeFamilyDetailsJSON(){
   var nameData = $("input[name='name[]']").map(function(){return $(this).val();}).get();
   var dobData = $("input[name='dob[]']").map(function(){return $(this).val();}).get();
-  var genderData = $("input[name='gender[]']").map(function(){return $(this).val();}).get();
+  var genderData = $("select[name='gender[]']").map(function(){return $(this).val();}).get();
   var relationshipData = $("input[name='relationship[]']").map(function(){return $(this).val();}).get();
 
   for(var i = 0; i < g_familyRowCount; i++){
