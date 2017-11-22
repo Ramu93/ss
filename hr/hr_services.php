@@ -67,6 +67,7 @@
     $designation = mysqli_real_escape_string($dbc,trim($_POST['designation']));
     $paymentMode = mysqli_real_escape_string($dbc,trim($_POST['payment_mode']));
     $ctcMonthly = mysqli_real_escape_string($dbc,trim($_POST['ctc_monthly']));
+    $pf = mysqli_real_escape_string($dbc, $_POST['emp_pf']);
     $doj = date('Y-m-d', strtotime(mysqli_real_escape_string($dbc,trim($_POST['doj']))));
     $qualification = mysqli_real_escape_string($dbc,trim($_POST['qualification']));
     $experience = mysqli_real_escape_string($dbc,trim($_POST['experience']));
@@ -87,7 +88,7 @@
     $employmentDetailsJson = $_POST['employment_details'];
 
 
-    $addEmployeeQuery = "INSERT INTO hr_employee_master (employee_name, dob, communication_address, pan_details, aadhar_details, emp_id, office, location, designation, payment_mode, bank_acc_num, bank_name, bank_ifsc, ctc_monthly, doj, qualification, experience, department, academic_details, family_details, employment_details, gender, blood_group, marital_status, mobile_number, email, emergency_contact_no, permanent_address, husband_father_name) VALUES ('$employeeName','$dob', '$communicationAddress', '$panDetails', '$aadharDetails', '$empID', '$office', '$location', '$designation', '$paymentMode', '$bankAccNumber', '$bankName', '$bankIfsc', '$ctcMonthly', '$doj', '$qualification', '$experience', '$department', '$academicDetailsJson', '$familyDetailsJson', '$employmentDetailsJson', '$gender', '$bloodGroup', '$maritalStatus', '$mobileNumber', '$email', '$emergencyContactNumber', '$permanentAddress', '$husbandFatherName')";
+    $addEmployeeQuery = "INSERT INTO hr_employee_master (employee_name, dob, communication_address, pan_details, aadhar_details, emp_id, office, location, designation, payment_mode, bank_acc_num, bank_name, bank_ifsc, ctc_monthly, doj, qualification, experience, department, academic_details, family_details, employment_details, gender, blood_group, marital_status, mobile_number, email, emergency_contact_no, permanent_address, husband_father_name, pf) VALUES ('$employeeName','$dob', '$communicationAddress', '$panDetails', '$aadharDetails', '$empID', '$office', '$location', '$designation', '$paymentMode', '$bankAccNumber', '$bankName', '$bankIfsc', '$ctcMonthly', '$doj', '$qualification', '$experience', '$department', '$academicDetailsJson', '$familyDetailsJson', '$employmentDetailsJson', '$gender', '$bloodGroup', '$maritalStatus', '$mobileNumber', '$email', '$emergencyContactNumber', '$permanentAddress', '$husbandFatherName', '$pf')";
 
   	if(mysqli_query($dbc, $addEmployeeQuery)){
   		$output = array("infocode" => "EMPLOYEEADDED", "message" => "Employee added succesfully.");

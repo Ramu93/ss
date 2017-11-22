@@ -230,6 +230,12 @@ include 'location-config.php';
           </div>
         </div>
         <div class="control-group">
+          <label class="control-label">PF:</label>
+          <div class="controls">
+               <input type="radio" class="form-control" name="emp_pf" id="pf_yes" value="Yes">Yes&nbsp;&nbsp;&nbsp;<input type="radio" id="pf_no" name="emp_pf" value="No">No
+          </div>
+        </div>
+        <div class="control-group">
           <label class="control-label">Date of joining:</label>
           <div class="controls">
                <input type="text" class="form-control required" name="doj" id="doj" placeholder="Date of joining" />

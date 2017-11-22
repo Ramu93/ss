@@ -258,6 +258,12 @@ if(mysqli_num_rows($result)>0){
           </div>
         </div>
         <div class="control-group">
+          <label class="control-label">PF:</label>
+          <div class="controls">
+               <input type="radio" class="form-control" name="emp_pf" id="pf_yes" value="Yes" <?php echo ('Yes'==$out['pf'])?'checked':''; ?> >Yes&nbsp;&nbsp;&nbsp;<input type="radio" id="pf_no" name="emp_pf" value="No" <?php echo ('No'==$out['pf'])?'checked':''; ?> >No
+          </div>
+        </div>
+        <div class="control-group">
           <label class="control-label">Date of joining:</label>
           <div class="controls">
                <input type="text" class="form-control required" name="doj" id="doj" placeholder="Date of joining" value="<?php echo $out['doj']; ?>" />
