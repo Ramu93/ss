@@ -119,7 +119,7 @@ include 'department-config.php';
             </div>
           </div>
           <div class="control-group">
-            <label class="control-label">Loss of Pay:</label>
+            <label class="control-label">Loss of Pay(Days):</label>
             <div class="controls">
               <input type="text" class="form-control required number" name="lop" id="lop" placeholder="Loss of pay" />
             </div>
@@ -127,13 +127,13 @@ include 'department-config.php';
           <div class="control-group">
             <label class="control-label">Special Allowance:</label>
             <div class="controls">
-              <input type="text" class="form-control required" name="special_allowance" id="special_allowance" placeholder="Special allowance" />
+              <input type="text" class="form-control required" name="special_allowance" id="special_allowance" placeholder="Special allowance" value="0" />
             </div>
           </div>
           <div class="control-group">
             <label class="control-label">Vehicle Maintenance:</label>
             <div class="controls">
-              <input type="text" class="form-control required" name="vm" id="vm" placeholder="Vehicle maintenance" />
+              <input type="text" class="form-control required" name="vm" id="vm" placeholder="Vehicle maintenance" value="0" />
             </div>
           </div>
           <div class="control-group">
@@ -151,13 +151,13 @@ include 'department-config.php';
           <div class="control-group">
             <label class="control-label">OD:</label>
             <div class="controls">
-              <input type="text" class="form-control required number" name="od" id="od" placeholder="OD" />
+              <input type="text" class="form-control required number" name="od" id="od" placeholder="OD" value="0" />
             </div>
           </div>
           <div class="control-group">
             <label class="control-label">TDS:</label>
             <div class="controls">
-              <input type="text" class="form-control required number" name="tds" id="tds" placeholder="TDS" />
+              <input type="text" class="form-control required number" value="0" name="tds" id="tds" placeholder="TDS" />
             </div>
           </div>
         </div>
@@ -267,7 +267,7 @@ function getEmployeesList(){
             if(result.infocode == "GETEMPLOYEELISTSUCCESS"){
                 var employeeData = JSON.parse(result.data);
                 gEmployeeList = employeeData;
-                console.log(gEmployeeList);
+                //console.log(gEmployeeList);
                 displayEmployeeTable(employeeData);
             }else{
                 bootbox.alert(result.message);
@@ -330,6 +330,11 @@ function getSelectedEmployee(empID){
           bootbox.alert(result.message);
       }
       getAdvanceDetails(empID);
+      if(gEmployee.pf == 'Yes'){
+        determineProfessionalTax();
+      } else {
+        $('#professional_tax').val('0');
+      }
     },
     error: function(){}
   });
@@ -385,6 +390,22 @@ function displayEmployeeDetails(employee){
   $('#employee_details_div').html(output);
   $('employee_details_div').show();
   $('#employee_salary_form').show();
+  // window.setTimeout(determineProfessionalTax(), 5000);
+}
+
+function determineProfessionalTax(){
+  var ctc = parseInt(gEmployee.ctc_monthly);
+  if(ctc > 12500){
+    $('#professional_tax').val('182.50');
+  } else if(ctc > 10000 && ctc <= 12500){
+    $('#professional_tax').val('126.50');
+  } else if(ctc > 7500 && ctc <= 10000){
+    $('#professional_tax').val('85');
+  } else if(ctc > 5000 && ctc <= 7500){
+    $('#professional_tax').val('30');
+  } else if(ctc < 3500){
+    $('#professional_tax').val('16.50');
+  }
 }
 
 function computeNetPay(){
@@ -392,26 +413,41 @@ function computeNetPay(){
     var ctc = parseInt(gEmployee.ctc_monthly);
 
     //earnings
-    var basic = 0.4 * ctc;
-    var hra = 0.5 * basic;
-    var conveyanceAllowance = 1600;
-    var medicalAllowance = 2000;
-    var specialAllowance = parseInt($('#special_allowance').val());
+    var basic = 0;
+    var hra = 0;
+    var conveyanceAllowance = 0;
+    var medicalAllowance = 0;
+    var specialAllowance = 0;
     var vm = parseInt($('#vm').val());
-
     //deductions
     var advance = parseInt($('#advance').val());
-    var pf = 0.12 * basic;
-    var esi = 0.0175 * ctc;
-    var professionalTax = parseInt($('#professional_tax').val());
+    var pf = 0;
+    var esi = 0;
+    var professionalTax = 0;
     var od = parseInt($('#od').val());
     var tds = parseInt($('#tds').val());
+
+    if(gEmployee.pf == 'Yes'){
+      basic = 0.4 * ctc;
+      hra = 0.5 * basic;
+      conveyanceAllowance = 1600;
+      medicalAllowance = 2000;
+      specialAllowance = parseInt($('#special_allowance').val());
+      pf = 0.12 * basic;
+      esi = 0.0175 * ctc;
+      professionalTax = parseFloat($('#professional_tax').val());
+    }
 
     //employer contributions
     var employerPF = 0.136 * basic;
     var employerESI = 0.0475 * ctc;
 
-    var totalEarnings = basic + hra + conveyanceAllowance + medicalAllowance + specialAllowance;
+    var totalEarnings = 0;
+    if(gEmployee.pf == 'Yes'){
+      totalEarnings = basic + hra + conveyanceAllowance + medicalAllowance + specialAllowance;
+    } else {
+      totalEarnings = ctc;
+    }
     //lop
     var workingDays = parseInt($('#working_days').val());
     var lop = parseInt($('#lop').val());
