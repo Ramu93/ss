@@ -56,7 +56,7 @@ if(mysqli_num_rows($result)>0){
           <label class="control-label">Marital Status:</label>
           <div class="controls">
              <select class="form-control required" name="marital_status" id="marital_status">
-                <option value="">Select gender...</option>
+                <option value="">Select marital status...</option>
                 <option valu="Single" <?php echo (($out['marital_status']=='Single')?'selected="selected"':''); ?> >Single</option>
                 <option valu="Married" <?php echo (($out['marital_status']=='Married')?'selected="selected"':''); ?> >Married</option>
              </select>

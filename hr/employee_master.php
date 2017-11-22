@@ -40,7 +40,7 @@ include 'location-config.php';
           <label class="control-label">Marital Status:</label>
           <div class="controls">
              <select class="form-control required" name="marital_status" id="marital_status">
-                <option value="">Select gender...</option>
+                <option value="">Select marital status...</option>
                 <option valu="Single">Single</option>
                 <option valu="Married">Married</option>
              </select>
