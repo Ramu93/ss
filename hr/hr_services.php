@@ -388,6 +388,7 @@
     $advanceData['bank_acc_number'] = mysqli_real_escape_string($dbc,trim($_POST['bank_acc_number']));
     $advanceData['bank_name'] = mysqli_real_escape_string($dbc,trim($_POST['bank_name']));
     $advanceData['bank_ifsc'] = mysqli_real_escape_string($dbc,trim($_POST['ifsc']));
+    $advanceData['deduction_type'] = $_POST['deduction_type'];
     addAdvanceLog($advanceData['emp_master_id'], $advanceData['advance_amount'], 'provided');
     if(checkIfAdvanceRecordExists($advanceData['emp_master_id'])){
       //update the amount value to the same record
@@ -400,7 +401,7 @@
 
   function addAdvanceRecord($advanceData){
     global $dbc;
-    $query = "INSERT INTO hr_employee_advance (emp_master_id, advance_date, advance_amount, payment_mode, bank_acc_num, bank_name, bank_ifsc) VALUES ('".$advanceData['emp_master_id']."', '".$advanceData['advance_date']."', '".$advanceData['advance_amount']."', '".$advanceData['payment_mode']."', '".$advanceData['bank_acc_number']."', '".$advanceData['bank_name']."', '".$advanceData['bank_ifsc']."')";
+    $query = "INSERT INTO hr_employee_advance (emp_master_id, advance_date, advance_amount, payment_mode, bank_acc_num, bank_name, bank_ifsc, deduction_type) VALUES ('".$advanceData['emp_master_id']."', '".$advanceData['advance_date']."', '".$advanceData['advance_amount']."', '".$advanceData['payment_mode']."', '".$advanceData['bank_acc_number']."', '".$advanceData['bank_name']."', '".$advanceData['bank_ifsc']."', '".$advanceData['deduction_type']."')";
     if(mysqli_query($dbc, $query)){
       return array('infocode' => 'ADVANCEDATAADDED', 'message' => 'Advance entry added successfuly.');
     } else {
@@ -412,7 +413,7 @@
     global $dbc;
     $prevAdvanceAmount = getPrevAdvanceAmount($advanceData['emp_master_id']);
     $advanceData['advance_amount'] = $prevAdvanceAmount + $advanceData['advance_amount'];
-    $query = "UPDATE hr_employee_advance SET advance_date='".$advanceData['advance_date']."', advance_amount='".$advanceData['advance_amount']."', payment_mode='".$advanceData['payment_mode']."', bank_acc_num='".$advanceData['bank_acc_number']."', bank_name='".$advanceData['bank_name']."', bank_ifsc='".$advanceData['bank_ifsc']."' WHERE emp_master_id='".$advanceData['emp_master_id']."'";
+    $query = "UPDATE hr_employee_advance SET advance_date='".$advanceData['advance_date']."', advance_amount='".$advanceData['advance_amount']."', payment_mode='".$advanceData['payment_mode']."', bank_acc_num='".$advanceData['bank_acc_number']."', bank_name='".$advanceData['bank_name']."', bank_ifsc='".$advanceData['bank_ifsc']."', deduction_type='".$advanceData['deduction_type']."' WHERE emp_master_id='".$advanceData['emp_master_id']."'";
     if(mysqli_query($dbc, $query)){
       return array('infocode' => 'ADVANCEDATAADDED', 'message' => 'Advance entry added successfuly.');
     } else {

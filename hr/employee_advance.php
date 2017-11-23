@@ -135,6 +135,12 @@ include 'location-config.php';
            <input type="text" class="form-control required" name="advance_amount" id="advance_amount" placeholder="Advance amount" />
           </div>
         </div>
+        <div class="control-group" id="deduction_type_div">
+          <label class="control-label">Advance amount:</label>
+          <div class="controls">
+           <input type="radio" name="deduction_type" value="auto"> Auto&nbsp;&nbsp;&nbsp;<input type="radio" name="deduction_type" value="manual"> Manual
+          </div>
+        </div>
         <div class="control-group row-fluid" style="padding-bottom: 10px;">
           <div class="span4 text-right" id="save_btn_div">
              <button type="submit" class="btn btn-success" onclick="saveAdvance();">Save</button>
@@ -174,6 +180,7 @@ $(document).ready(function(){
   $('#advance_date_div').hide();
   $('#employee_details_div').hide();
   $('#advance_amount_div').hide();
+  $('#deduction_type_div').hide();
 });
 
 
@@ -252,6 +259,7 @@ function selectEmployee(empMasterId){
   $('#employee_details_div').show();
   $('#payment_mode_div').show();
   $('#advance_amount_div').show();
+  $('#deduction_type_div').show();
 }
 
 function saveAdvance(){
@@ -271,6 +279,7 @@ function saveAdvance(){
                 $('#advance_amount_div').hide();
                 $('#payment_mode_div').hide();
                 $('#bank_details_div').hide();
+                $('#deduction_type_div').hide();
                 $('#employee_advance_form')[0].reset();
             }else{
                 bootbox.alert(result.message);
