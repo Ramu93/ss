@@ -1,5 +1,5 @@
 <?php
 	
-	$location = array('T. Nagar' => 'T. Nagar', 'Banglore' => 'Banglore', 'Poonamalle' => 'Poonamalle');
+	$location = array('tnagar' => 'T. Nagar', 'banglore' => 'Banglore', 'poonamalle' => 'Poonamalle');
 
 ?>

@@ -73,6 +73,9 @@ include 'location-config.php';
           <div class="span4 text-right">
              <button type="submit" class="btn btn-success" onclick="getEmployeesList();">Get Employee List</button>
           </div>
+          <div class="span4">
+             <button type="button" class="btn btn-primary" onclick="window.location = 'employee_advance_list.php';">View Advance List</button>
+          </div>
         </div>
       </form>
       <form id="employee_advance_form" name="employee_attendance_form" method="post" class="form-horizontal" action="" onsubmit="return false;">
@@ -130,15 +133,21 @@ include 'location-config.php';
           </div>
         </div>
         <div class="control-group" id="advance_amount_div">
-          <label class="control-label">Advance amount:</label>
+          <label class="control-label">Advance Amount:</label>
           <div class="controls">
            <input type="text" class="form-control required" name="advance_amount" id="advance_amount" placeholder="Advance amount" />
           </div>
         </div>
         <div class="control-group" id="deduction_type_div">
-          <label class="control-label">Advance amount:</label>
+          <label class="control-label">Deduction Type:</label>
           <div class="controls">
-           <input type="radio" name="deduction_type" value="auto"> Auto&nbsp;&nbsp;&nbsp;<input type="radio" name="deduction_type" value="manual"> Manual
+           <input type="radio" name="deduction_type" id="deduction_type_auto" value="auto" checked> Auto&nbsp;&nbsp;&nbsp;<input type="radio" name="deduction_type" id="deduction_type_manual" value="manual"> Manual
+          </div>
+        </div>
+        <div class="control-group" id="deduction_amount_div">
+          <label class="control-label">Deduction Amount:</label>
+          <div class="controls">
+           <input type="text" class="form-control required" name="deduction_amount" id="deduction_amount" placeholder="Advance amount" />
           </div>
         </div>
         <div class="control-group row-fluid" style="padding-bottom: 10px;">
@@ -181,6 +190,7 @@ $(document).ready(function(){
   $('#employee_details_div').hide();
   $('#advance_amount_div').hide();
   $('#deduction_type_div').hide();
+  $('#deduction_amount_div').hide();
 });
 
 
@@ -206,7 +216,7 @@ function getEmployeesList(){
             if(result.infocode == "GETEMPLOYEELISTSUCCESS"){
                 var employeeData = JSON.parse(result.data);
                 gEmployeeList = employeeData;
-                console.log(gEmployeeList);
+                // console.log(gEmployeeList);
                 displayEmployeeTable(employeeData);
             }else{
                 bootbox.alert(result.message);
@@ -260,6 +270,21 @@ function selectEmployee(empMasterId){
   $('#payment_mode_div').show();
   $('#advance_amount_div').show();
   $('#deduction_type_div').show();
+  $('#deduction_amount_div').show();
+  bindAdvanceEvents();
+}
+
+function bindAdvanceEvents(){
+  $('#deduction_type_manual').change(function(){
+    if($('#deduction_type_manual').val() == 'manual'){
+      $('#deduction_amount_div').hide();
+    }
+  });
+  $('#deduction_type_auto').change(function(){
+    if($('#deduction_type_auto').val() == 'auto'){
+      $('#deduction_amount_div').show();
+    }
+  });
 }
 
 function saveAdvance(){
@@ -280,6 +305,7 @@ function saveAdvance(){
                 $('#payment_mode_div').hide();
                 $('#bank_details_div').hide();
                 $('#deduction_type_div').hide();
+                $('#deduction_amount_div').hide();
                 $('#employee_advance_form')[0].reset();
             }else{
                 bootbox.alert(result.message);

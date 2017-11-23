@@ -48,6 +48,9 @@
     case 'get_advance_details':
         $finaloutput = getAdvanceDetails();
     break;
+    case 'update_advance':
+        $finaloutput = updateAdvanceRecordEditMode();
+    break;
     default:
           $finaloutput = array("infocode" => "INVALIDACTION", "message" => "Irrelevant action");
   }
@@ -389,6 +392,7 @@
     $advanceData['bank_name'] = mysqli_real_escape_string($dbc,trim($_POST['bank_name']));
     $advanceData['bank_ifsc'] = mysqli_real_escape_string($dbc,trim($_POST['ifsc']));
     $advanceData['deduction_type'] = $_POST['deduction_type'];
+    $advanceData['deduction_amount'] = mysqli_real_escape_string($dbc,trim($_POST['deduction_amount']));
     addAdvanceLog($advanceData['emp_master_id'], $advanceData['advance_amount'], 'provided');
     if(checkIfAdvanceRecordExists($advanceData['emp_master_id'])){
       //update the amount value to the same record
@@ -401,7 +405,7 @@
 
   function addAdvanceRecord($advanceData){
     global $dbc;
-    $query = "INSERT INTO hr_employee_advance (emp_master_id, advance_date, advance_amount, payment_mode, bank_acc_num, bank_name, bank_ifsc, deduction_type) VALUES ('".$advanceData['emp_master_id']."', '".$advanceData['advance_date']."', '".$advanceData['advance_amount']."', '".$advanceData['payment_mode']."', '".$advanceData['bank_acc_number']."', '".$advanceData['bank_name']."', '".$advanceData['bank_ifsc']."', '".$advanceData['deduction_type']."')";
+    $query = "INSERT INTO hr_employee_advance (emp_master_id, advance_date, advance_amount, payment_mode, bank_acc_num, bank_name, bank_ifsc, deduction_type, deduction_amount) VALUES ('".$advanceData['emp_master_id']."', '".$advanceData['advance_date']."', '".$advanceData['advance_amount']."', '".$advanceData['payment_mode']."', '".$advanceData['bank_acc_number']."', '".$advanceData['bank_name']."', '".$advanceData['bank_ifsc']."', '".$advanceData['deduction_type']."', '".$advanceData['deduction_amount']."')";
     if(mysqli_query($dbc, $query)){
       return array('infocode' => 'ADVANCEDATAADDED', 'message' => 'Advance entry added successfuly.');
     } else {
@@ -413,11 +417,30 @@
     global $dbc;
     $prevAdvanceAmount = getPrevAdvanceAmount($advanceData['emp_master_id']);
     $advanceData['advance_amount'] = $prevAdvanceAmount + $advanceData['advance_amount'];
-    $query = "UPDATE hr_employee_advance SET advance_date='".$advanceData['advance_date']."', advance_amount='".$advanceData['advance_amount']."', payment_mode='".$advanceData['payment_mode']."', bank_acc_num='".$advanceData['bank_acc_number']."', bank_name='".$advanceData['bank_name']."', bank_ifsc='".$advanceData['bank_ifsc']."', deduction_type='".$advanceData['deduction_type']."' WHERE emp_master_id='".$advanceData['emp_master_id']."'";
+    $query = "UPDATE hr_employee_advance SET advance_date='".$advanceData['advance_date']."', advance_amount='".$advanceData['advance_amount']."', payment_mode='".$advanceData['payment_mode']."', bank_acc_num='".$advanceData['bank_acc_number']."', bank_name='".$advanceData['bank_name']."', bank_ifsc='".$advanceData['bank_ifsc']."', deduction_type='".$advanceData['deduction_type']."', deduction_amount='".$advanceData['deduction_amount']."' WHERE emp_master_id='".$advanceData['emp_master_id']."'";
     if(mysqli_query($dbc, $query)){
       return array('infocode' => 'ADVANCEDATAADDED', 'message' => 'Advance entry added successfuly.');
     } else {
       return array('infocode' => 'ADVANCEDATANOTADDED', 'message' => 'Advance entry not added.');
+    }
+  }
+
+  function updateAdvanceRecordEditMode(){
+    global $dbc;
+    $empMasterId = mysqli_real_escape_string($dbc,trim($_POST['emp_mst_id_val']));
+    $advanceAmount = mysqli_real_escape_string($dbc,trim($_POST['advance_amount']));
+    $deductionType = $_POST['deduction_type'];
+    $deductionAmount = mysqli_real_escape_string($dbc,trim($_POST['deduction_amount']));
+    $repayAmount = mysqli_real_escape_string($dbc,trim($_POST['repay_amount']));
+    if($repayAmount > 0 && $repayAmount <= $advanceAmount){
+      $advanceAmount -= $repayAmount;
+    }
+    $query = "UPDATE hr_employee_advance SET advance_amount='$advanceAmount', deduction_type='$deductionType', deduction_amount='$deductionAmount' WHERE emp_master_id='$empMasterId'";
+    if(mysqli_query($dbc, $query)){
+      addAdvanceLog($empMasterId, $repayAmount, 'deduction');
+      return array('infocode' => 'ADVANCEUPDATED', 'message' => 'Advance entry updated successfuly.');
+    } else {
+      return array('infocode' => 'ADVANCENOTUPDATED', 'message' => 'Advance entry not updated.');
     }
   }
 
@@ -442,14 +465,19 @@
 
   function getAdvanceDetails(){
       global $dbc;
-      $empId = mysqli_real_escape_string($dbc,trim($_POST['emp_id']));
-      $query = "SELECT adv.advance_amount FROM hr_employee_advance adv, hr_employee_master emst WHERE emst.emp_id='$empId' AND emst.hr_emp_master_id=adv.emp_master_id";
+      if(isset($_POST['emp_id'])){
+        $empId = mysqli_real_escape_string($dbc,trim($_POST['emp_id']));
+        $query = "SELECT adv.advance_amount, emst.employee_name, emst.hr_emp_master_id, adv.deduction_type, adv.deduction_amount FROM hr_employee_advance adv, hr_employee_master emst WHERE emst.emp_id='$empId' AND emst.hr_emp_master_id=adv.emp_master_id";
+      } else if(isset($_POST['emp_mst_id'])){
+        $empId = mysqli_real_escape_string($dbc,trim($_POST['emp_mst_id']));
+        $query = "SELECT adv.advance_amount, emst.employee_name, emst.hr_emp_master_id, adv.deduction_type, adv.deduction_amount FROM hr_employee_advance adv, hr_employee_master emst WHERE emst.hr_emp_master_id='$empId' AND emst.hr_emp_master_id=adv.emp_master_id";
+      }
       //file_put_contents("hr.log", "\n".print_r($query, true), FILE_APPEND | LOCK_EX);
       $result = mysqli_query($dbc, $query);
       if(mysqli_num_rows($result) > 0){
         $row = mysqli_fetch_assoc($result);
         if($row['advance_amount'] > 0){
-          return array('infocode' => 'ADVANCEAVAILABLE', 'advance_amount' => $row['advance_amount']);
+          return array('infocode' => 'ADVANCEAVAILABLE', 'advance_amount' => $row['advance_amount'], 'employee_name' => $row['employee_name'], 'employee_id' => $row['hr_emp_master_id'], 'deduction_type' => $row['deduction_type'], 'deduction_amount' => $row['deduction_amount']);
         } else {
           return array('infocode' => 'ADVANCEAVAILABLE', 'advance_amount' => '0');
         }

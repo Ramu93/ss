@@ -137,6 +137,10 @@ include 'department-config.php';
             </div>
           </div>
           <div class="control-group">
+            <label class="control-label">Pending Advance:</label>
+            <label class="control-label" id="pending_advance_lbl"></label>
+          </div>
+          <div class="control-group">
             <label class="control-label">Advance:</label>
             <div class="controls">
               <input type="text" class="form-control required" name="advance" id="advance" placeholder="Advance" />
@@ -349,7 +353,16 @@ function getAdvanceDetails(empID){
     dataType: 'json',
     success: function(result){
       if(result.infocode == "ADVANCEAVAILABLE"){
-          $('#advance').val(result.advance_amount);
+          $('#pending_advance_lbl').html(result.advance_amount);
+          if(result.deduction_type == 'auto'){
+            if(parseInt(result.advance_amount) < parseInt(result.deduction_amount)){
+              $('#advance').val(result.advance_amount);
+            } else {
+              $('#advance').val(result.deduction_amount);
+            }
+          } else {
+            $('#advance').val(0);
+          }
       }
     },
     error: function(){}
