@@ -232,7 +232,37 @@ include 'location-config.php';
         <div class="control-group">
           <label class="control-label">PF:</label>
           <div class="controls">
-               <input type="radio" class="form-control" name="emp_pf" id="pf_yes" value="Yes">Yes&nbsp;&nbsp;&nbsp;<input type="radio" id="pf_no" name="emp_pf" value="No">No
+               <!-- <input type="radio" class="form-control" name="emp_pf" id="pf_yes" value="Yes">Yes&nbsp;&nbsp;&nbsp;<input type="radio" id="pf_no" name="emp_pf" value="No">No -->
+            <select class="form-control required" name="emp_pf" id="emp_pf">
+              <option value="Yes">Yes</option>
+              <option value="No" selected="selected">No</option>
+            </select>
+          </div>
+        </div>
+        <div id="pf_yes_div">
+          <div class="control-group">
+            <label class="control-label">Basic Percentage:</label>
+            <div class="controls">
+                 <input type="text" class="form-control required" name="basic_percentage" id="basic_percentage" placeholder="Percentage of basic salary" />
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">HRA Percentage:</label>
+            <div class="controls">
+                 <input type="text" class="form-control required" name="hra_percentage" id="hra_percentage" placeholder="Percentage of HRA" />
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Conveyance Allowance:</label>
+            <div class="controls">
+                 <input type="text" class="form-control required" name="conveyance_allowance" id="conveyance_allowance" placeholder="Conveyance Allowance" />
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Medical Allowance:</label>
+            <div class="controls">
+                 <input type="text" class="form-control required" name="medical_allowance" id="medical_allowance" placeholder="Medical Allowance" />
+            </div>
           </div>
         </div>
         <div class="control-group">
@@ -457,6 +487,20 @@ $(document).ready(function(){
         $('#bank_details_div').show();
       } else{
         $('#bank_details_div').hide();
+      }
+    });
+
+    //PF data
+    if($('#emp_pf').val() == 'Yes'){
+      $('#pf_yes_div').show();
+    } else {
+      $('#pf_yes_div').hide();
+    }
+    $('#emp_pf').on('change', function(){
+      if($('#emp_pf').val() == 'Yes'){
+        $('#pf_yes_div').show();
+      } else {
+        $('#pf_yes_div').hide();
       }
     });
 });

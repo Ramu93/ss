@@ -86,12 +86,16 @@
     $mobileNumber = mysqli_real_escape_string($dbc, trim($_POST['mobile_number']));
     $email = mysqli_real_escape_string($dbc, trim($_POST['email']));
     $emergencyContactNumber = mysqli_real_escape_string($dbc, trim($_POST['emergency_contact_number']));
+    $basicPercentage = mysqli_real_escape_string($dbc, trim($_POST['basic_percentage']));
+    $hraPercentage = mysqli_real_escape_string($dbc, trim($_POST['hra_percentage']));
+    $conveyanceAllowance = mysqli_real_escape_string($dbc, trim($_POST['conveyance_allowance']));
+    $medicalAllowance = mysqli_real_escape_string($dbc, trim($_POST['medical_allowance']));
     $academicDetailsJson = $_POST['academic_details'];
     $familyDetailsJson = $_POST['family_details'];
     $employmentDetailsJson = $_POST['employment_details'];
 
 
-    $addEmployeeQuery = "INSERT INTO hr_employee_master (employee_name, dob, communication_address, pan_details, aadhar_details, emp_id, office, location, designation, payment_mode, bank_acc_num, bank_name, bank_ifsc, ctc_monthly, doj, qualification, experience, department, academic_details, family_details, employment_details, gender, blood_group, marital_status, mobile_number, email, emergency_contact_no, permanent_address, husband_father_name, pf) VALUES ('$employeeName','$dob', '$communicationAddress', '$panDetails', '$aadharDetails', '$empID', '$office', '$location', '$designation', '$paymentMode', '$bankAccNumber', '$bankName', '$bankIfsc', '$ctcMonthly', '$doj', '$qualification', '$experience', '$department', '$academicDetailsJson', '$familyDetailsJson', '$employmentDetailsJson', '$gender', '$bloodGroup', '$maritalStatus', '$mobileNumber', '$email', '$emergencyContactNumber', '$permanentAddress', '$husbandFatherName', '$pf')";
+    $addEmployeeQuery = "INSERT INTO hr_employee_master (employee_name, dob, communication_address, pan_details, aadhar_details, emp_id, office, location, designation, payment_mode, bank_acc_num, bank_name, bank_ifsc, ctc_monthly, doj, qualification, experience, department, academic_details, family_details, employment_details, gender, blood_group, marital_status, mobile_number, email, emergency_contact_no, permanent_address, husband_father_name, pf, basic_percentage, hra_percentage, conveyance_allowance, medical_allowance) VALUES ('$employeeName','$dob', '$communicationAddress', '$panDetails', '$aadharDetails', '$empID', '$office', '$location', '$designation', '$paymentMode', '$bankAccNumber', '$bankName', '$bankIfsc', '$ctcMonthly', '$doj', '$qualification', '$experience', '$department', '$academicDetailsJson', '$familyDetailsJson', '$employmentDetailsJson', '$gender', '$bloodGroup', '$maritalStatus', '$mobileNumber', '$email', '$emergencyContactNumber', '$permanentAddress', '$husbandFatherName', '$pf', '$basicPercentage', '$hraPercentage', '$conveyanceAllowance', '$medicalAllowance')";
 
   	if(mysqli_query($dbc, $addEmployeeQuery)){
   		$output = array("infocode" => "EMPLOYEEADDED", "message" => "Employee added succesfully.");
@@ -131,11 +135,15 @@
     $mobileNumber = mysqli_real_escape_string($dbc, trim($_POST['mobile_number']));
     $email = mysqli_real_escape_string($dbc, trim($_POST['email']));
     $emergencyContactNumber = mysqli_real_escape_string($dbc, trim($_POST['emergency_contact_number']));
+    $basicPercentage = mysqli_real_escape_string($dbc, trim($_POST['basic_percentage']));
+    $hraPercentage = mysqli_real_escape_string($dbc, trim($_POST['hra_percentage']));
+    $conveyanceAllowance = mysqli_real_escape_string($dbc, trim($_POST['conveyance_allowance']));
+    $medicalAllowance = mysqli_real_escape_string($dbc, trim($_POST['medical_allowance']));
     $academicDetailsJson = $_POST['academic_details'];
     $familyDetailsJson = $_POST['family_details'];
     $employmentDetailsJson = $_POST['employment_details'];
 
-    $updateEmpoyeeQuery = "UPDATE hr_employee_master SET employee_name='$employeeName', dob='$dob', communication_address='$communicationAddress', pan_details='$panDetails', aadhar_details='$aadharDetails', office='$office', location='$location', designation='$designation', payment_mode='$paymentMode', ctc_monthly='$ctcMonthly', doj='$doj', qualification='$qualification', experience='$experience', department='$department', bank_acc_num='$bankAccNumber', bank_name='$bankName', bank_ifsc='$bankIfsc', gender='$gender', blood_group='$bloodGroup', marital_status='$maritalStatus', husband_father_name='$husbandFatherName', permanent_address='$permanentAddress', mobile_number='$mobileNumber', email='$email', emergency_contact_no='$emergencyContactNumber', academic_details='$academicDetailsJson', family_details='$familyDetailsJson', employment_details='$employmentDetailsJson', pf='$pf' WHERE emp_id='$empID'";
+    $updateEmpoyeeQuery = "UPDATE hr_employee_master SET employee_name='$employeeName', dob='$dob', communication_address='$communicationAddress', pan_details='$panDetails', aadhar_details='$aadharDetails', office='$office', location='$location', designation='$designation', payment_mode='$paymentMode', ctc_monthly='$ctcMonthly', doj='$doj', qualification='$qualification', experience='$experience', department='$department', bank_acc_num='$bankAccNumber', bank_name='$bankName', bank_ifsc='$bankIfsc', gender='$gender', blood_group='$bloodGroup', marital_status='$maritalStatus', husband_father_name='$husbandFatherName', permanent_address='$permanentAddress', mobile_number='$mobileNumber', email='$email', emergency_contact_no='$emergencyContactNumber', academic_details='$academicDetailsJson', family_details='$familyDetailsJson', employment_details='$employmentDetailsJson', pf='$pf', basic_percentage='$basicPercentage', hra_percentage='$hraPercentage', conveyance_allowance='$conveyanceAllowance', medical_allowance='$medicalAllowance' WHERE emp_id='$empID'";
 
     if(mysqli_query($dbc, $updateEmpoyeeQuery)){
       $output = array("infocode" => "EMPLOYEEUPDATED", "message" => "Employee updated succesfully.");

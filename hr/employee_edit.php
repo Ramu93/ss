@@ -260,7 +260,36 @@ if(mysqli_num_rows($result)>0){
         <div class="control-group">
           <label class="control-label">PF:</label>
           <div class="controls">
-               <input type="radio" class="form-control" name="emp_pf" id="pf_yes" value="Yes" <?php echo ('Yes'==$out['pf'])?'checked':''; ?> >Yes&nbsp;&nbsp;&nbsp;<input type="radio" id="pf_no" name="emp_pf" value="No" <?php echo ('No'==$out['pf'])?'checked':''; ?> >No
+            <select class="form-control required" name="emp_pf" id="emp_pf">
+              <option value="Yes" <?php echo ($out['pf']=='Yes')?'selected="selected"':''; ?> >Yes</option>
+              <option value="No" <?php echo ($out['pf']=='No')?'selected="selected"':''; ?>>No</option>
+            </select>
+          </div>
+        </div>
+        <div id="pf_yes_div">
+          <div class="control-group">
+            <label class="control-label">Basic Percentage:</label>
+            <div class="controls">
+                 <input type="text" class="form-control required" name="basic_percentage" id="basic_percentage" placeholder="Percentage of basic salary" value="<?php echo $out['basic_percentage']; ?>" />
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">HRA Percentage:</label>
+            <div class="controls">
+                 <input type="text" class="form-control required" name="hra_percentage" id="hra_percentage" placeholder="Percentage of HRA" value="<?php echo $out['hra_percentage']; ?>" />
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Conveyance Allowance:</label>
+            <div class="controls">
+                 <input type="text" class="form-control required" name="conveyance_allowance" id="conveyance_allowance" placeholder="Conveyance Allowance" value="<?php echo $out['conveyance_allowance']; ?>" />
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Medical Allowance:</label>
+            <div class="controls">
+                 <input type="text" class="form-control required" name="medical_allowance" id="medical_allowance" placeholder="Medical Allowance" value="<?php echo $out['medical_allowance']; ?>" />
+            </div>
           </div>
         </div>
         <div class="control-group">
@@ -442,6 +471,18 @@ $(document).ready(function(){
         $('#bank_details_div').show();
       } else{
         $('#bank_details_div').hide();
+      }
+    });
+
+    <?php if($out['pf'] == 'No'){ ?>
+      $('#pf_yes_div').hide();
+    <?php } ?>
+
+    $('#emp_pf').on('change', function(){
+      if($('#emp_pf').val() == 'Yes'){
+        $('#pf_yes_div').show();
+      } else {
+        $('#pf_yes_div').hide();
       }
     });
 });

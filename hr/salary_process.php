@@ -418,10 +418,10 @@ function determineProfessionalTax(){
 function computeNetPay(){
   if($('#employee_salary_form').valid()){
     var ctc = parseInt(gEmployee.ctc_monthly);
-    // var basicPercentage = parseFloat(gEmployee.basic_percentage);
-    // var hraPercentage = parseFloat(gEmployee.hra_percentage);
-    // var conAll = parseFloat(gEmployee.conveyance_allowance);
-    // var medAll = parseFloat(gEmployee.medical_allowance);
+    var basicPercentage = parseFloat(gEmployee.basic_percentage);
+    var hraPercentage = parseFloat(gEmployee.hra_percentage);
+    var conAll = parseFloat(gEmployee.conveyance_allowance);
+    var medAll = parseFloat(gEmployee.medical_allowance);
 
     //earnings
     var basic = 0;
@@ -439,10 +439,10 @@ function computeNetPay(){
     var tds = parseInt($('#tds').val());
 
     if(gEmployee.pf == 'Yes'){
-      basic = 0.4 * ctc;
-      hra = 0.5 * basic;
-      conveyanceAllowance = 1600;
-      medicalAllowance = 2000;
+      basic = (parseFloat(basicPercentage)/100) * ctc;
+      hra = (parseFloat(hraPercentage)/100) * basic;
+      conveyanceAllowance = conAll;
+      medicalAllowance = medAll;
       specialAllowance = ctc - (basic + hra + conveyanceAllowance + medicalAllowance);
       pf = 0.12 * basic;
       esi = 0.0175 * ctc;
