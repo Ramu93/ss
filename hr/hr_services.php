@@ -305,14 +305,16 @@
     $employer_esi = $salaryInfo->employer_esi;
     $working_days = $salaryInfo->working_days;
     $lop = $salaryInfo->lop;
-    $lop_amount = $salaryInfo->lop_amount;
-    $earnings_per_day = $salaryInfo->earnings_per_day;
+    // $lop_amount = $salaryInfo->lop_amount;
     $total_earnings = $salaryInfo->total_earnings;
     $total_deductions = $salaryInfo->total_deductions;
     $net_pay = $salaryInfo->net_pay;
     $salary_date = date("Y-m-d");
 
-    $saveSalaryQuery = "INSERT INTO hr_salary_process (emp_id, payment_mode, bank_acc_num, bank_name, bank_ifsc, salary_date, basic_monthly, hra, special_allowance, vm, advance, pf, esi, professional_tax, od, tds, employer_pf, employer_esi, working_days, lop, lop_amount, earnings_per_day, total_earnings, total_deductions, net_pay) VALUES ('$empId', '$paymentMode', '$bankAccNumber', '$bankName', '$bankIfsc', '$salary_date', '$basic_monthly', '$hra', '$special_allowance', '$vm', '$advance', '$pf', '$esi', '$professional_tax', '$od', '$tds', '$employer_pf', '$employer_esi', '$working_days', '$lop', '$lop_amount', '$earnings_per_day', '$total_earnings', '$total_deductions', '$net_pay')";
+    //file_put_contents("hr.log", "\n".print_r($salaryInfo, true), FILE_APPEND | LOCK_EX);
+
+    $saveSalaryQuery = "INSERT INTO hr_salary_process (emp_id, payment_mode, bank_acc_num, bank_name, bank_ifsc, salary_date, basic_monthly, hra, special_allowance, vm, advance, pf, esi, professional_tax, od, tds, employer_pf, employer_esi, working_days, lop, total_earnings, total_deductions, net_pay) VALUES ('".$empId."', '".$paymentMode."', '".$bankAccNumber."', '".$bankName."', '".$bankIfsc."', '".$salary_date."', '".$basic_monthly."', '".$hra."', '".$special_allowance."', '".$vm."', '".$advance."', '".$pf."', '".$esi."', '".$professional_tax."', '".$od."', '".$tds."', '".$employer_pf."', '".$employer_esi."', '".$working_days."', '".$lop."', '".$total_earnings."', '".$total_deductions."', '".$net_pay."')";
+
     if(mysqli_query($dbc, $saveSalaryQuery)){
       if($advance > 0){
         updateAdvanceAmount($empId, $advance);

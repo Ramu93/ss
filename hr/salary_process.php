@@ -125,12 +125,6 @@ include 'department-config.php';
             </div>
           </div>
           <div class="control-group">
-            <label class="control-label">Special Allowance:</label>
-            <div class="controls">
-              <input type="text" class="form-control required" name="special_allowance" id="special_allowance" placeholder="Special allowance" value="0" />
-            </div>
-          </div>
-          <div class="control-group">
             <label class="control-label">Vehicle Maintenance:</label>
             <div class="controls">
               <input type="text" class="form-control required" name="vm" id="vm" placeholder="Vehicle maintenance" value="0" />
@@ -409,21 +403,25 @@ function displayEmployeeDetails(employee){
 function determineProfessionalTax(){
   var ctc = parseInt(gEmployee.ctc_monthly);
   if(ctc > 12500){
-    $('#professional_tax').val('182.50');
+    $('#professional_tax').val('183');
   } else if(ctc > 10000 && ctc <= 12500){
-    $('#professional_tax').val('126.50');
+    $('#professional_tax').val('127');
   } else if(ctc > 7500 && ctc <= 10000){
     $('#professional_tax').val('85');
   } else if(ctc > 5000 && ctc <= 7500){
     $('#professional_tax').val('30');
   } else if(ctc < 3500){
-    $('#professional_tax').val('16.50');
+    $('#professional_tax').val('17');
   }
 }
 
 function computeNetPay(){
   if($('#employee_salary_form').valid()){
     var ctc = parseInt(gEmployee.ctc_monthly);
+    // var basicPercentage = parseFloat(gEmployee.basic_percentage);
+    // var hraPercentage = parseFloat(gEmployee.hra_percentage);
+    // var conAll = parseFloat(gEmployee.conveyance_allowance);
+    // var medAll = parseFloat(gEmployee.medical_allowance);
 
     //earnings
     var basic = 0;
@@ -445,7 +443,7 @@ function computeNetPay(){
       hra = 0.5 * basic;
       conveyanceAllowance = 1600;
       medicalAllowance = 2000;
-      specialAllowance = parseInt($('#special_allowance').val());
+      specialAllowance = ctc - (basic + hra + conveyanceAllowance + medicalAllowance);
       pf = 0.12 * basic;
       esi = 0.0175 * ctc;
       professionalTax = parseFloat($('#professional_tax').val());
@@ -455,30 +453,33 @@ function computeNetPay(){
     var employerPF = 0.136 * basic;
     var employerESI = 0.0475 * ctc;
 
-    var totalEarnings = 0;
-    if(gEmployee.pf == 'Yes'){
-      totalEarnings = basic + hra + conveyanceAllowance + medicalAllowance + specialAllowance;
-    } else {
-      totalEarnings = ctc;
-    }
     //lop
-    var workingDays = parseInt($('#working_days').val());
-    var lop = parseInt($('#lop').val());
-    var earningsPerDay = totalEarnings / workingDays;
-    var lopAmount = lop * earningsPerDay;
+    var payableDays = parseInt($('#working_days').val());
+    var lopDays = parseInt($('#lop').val());
+    var paidDays = payableDays - lopDays;
+    var payDays = paidDays / payableDays;
 
-    totalEarnings = totalEarnings - lopAmount;
-    totalEarnings = totalEarnings.toFixed(2);
+    var paidBasic = basic * payDays;
+    var paidHra = hra * payDays;
+    var paidConvAll = conveyanceAllowance * payDays;
+    var paidMedAll = medicalAllowance * payDays;
+    var paidSplAll = specialAllowance * payDays;
 
+    var grossSalary = paidBasic + paidHra + paidConvAll + paidMedAll + paidSplAll;
     var totalDeductions = advance + pf + esi + professionalTax + od + tds;
-    totalDeductions = totalDeductions.toFixed(2);
+    if(gEmployee.pf != 'Yes'){
+      grossSalary = ctc;
+      var lopAmount = ctc * (lopDays / payableDays); 
+      totalDeductions += lopAmount;
+    }
+    totalDeductions = Math.round(totalDeductions);
 
-    var netPay = totalEarnings - totalDeductions + vm;
-    netPay = netPay.toFixed(2);
+    var netPay = grossSalary - totalDeductions + vm;
+    netPay = Math.round(netPay);
 
-    gSalaryInfo.basic_monthly = basic;
-    gSalaryInfo.hra = hra;
-    gSalaryInfo.special_allowance = specialAllowance;
+    gSalaryInfo.basic_monthly = paidBasic;
+    gSalaryInfo.hra = paidHra;
+    gSalaryInfo.special_allowance = paidSplAll;
     gSalaryInfo.vm = vm;
     gSalaryInfo.advance = advance;
     gSalaryInfo.pf = pf;
@@ -488,18 +489,17 @@ function computeNetPay(){
     gSalaryInfo.tds = tds;
     gSalaryInfo.employer_pf = employerPF;
     gSalaryInfo.employer_esi = employerESI;
-    gSalaryInfo.lop = lop;
-    gSalaryInfo.lop_amount = lopAmount;
-    gSalaryInfo.working_days = workingDays;
-    gSalaryInfo.earnings_per_day = earningsPerDay;
-    gSalaryInfo.total_earnings = totalEarnings;
+    gSalaryInfo.lop = lopDays;
+    // gSalaryInfo.lop_amount = lopAmount;
+    gSalaryInfo.working_days = payableDays;
+    gSalaryInfo.total_earnings = grossSalary;
     gSalaryInfo.total_deductions = totalDeductions;
     gSalaryInfo.net_pay = netPay;
 
     var output = '';
     output += '<div class="control-group">';
       output += '<label class="control-label">Total Earnings:</label>';
-      output += '<label class="control-label">'+totalEarnings+'</label>';
+      output += '<label class="control-label">'+grossSalary+'</label>';
     output += '</div>';
     output += '<div class="control-group">';
       output += '<label class="control-label">Total Deductions:</label>';
